@@ -1,7 +1,9 @@
 package alex.hooks.hooked;
 
 
-public class HookedZombieEntity extends asp {
+import net.minecraft.tileentity.TileEntity;
+
+public class HookedZombieEntity extends TileEntity {
 
    public float prevAngle;
    public float angle;

@@ -1,11 +1,13 @@
 package alex.hooks.hooked;
 
+import net.minecraft.block.Block;
+
 import alex.hooks.Hooks;
 import alex.hooks.hooked.TileEntityHookedCowEntity;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class TileEntityHookedCowBlock extends amw {
+public class TileEntityHookedCowBlock extends Block {
 
    public TileEntityHookedCowBlock(int id) {
       super(id, akc.f);

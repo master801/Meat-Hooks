@@ -1,5 +1,9 @@
 package alex.hooks;
 
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+
 import alex.hooks.IceChest;
 import alex.hooks.IceChestEntity;
 import cpw.mods.fml.common.FMLLog;
@@ -9,14 +13,14 @@ import java.util.Calendar;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public class IceChestRenderer extends bje {
+public class IceChestRenderer extends TileEntitySpecialRenderer {
 
-   private static final bjo RES_TRAPPED_DOUBLE = new bjo("Hooks:textures/blocks/trapped_double.png");
-   private static final bjo RES_CHRISTMAS_DOUBLE = new bjo("Hooks:textures/blocks/christmas_double.png");
-   private static final bjo RES_NORMAL_DOUBLE = new bjo("Hooks:textures/blocks/normal_double.png");
-   private static final bjo RES_TRAPPED_SINGLE = new bjo("Hooks:textures/blocks/trapped.png");
-   private static final bjo RES_CHRISTMAS_SINGLE = new bjo("Hooks:textures/blocks/christmas.png");
-   private static final bjo RES_NORMAL_SINGLE = new bjo("Hooks:textures/blocks/normal.png");
+   private static final ResourceLocation RES_TRAPPED_DOUBLE = new ResourceLocation("Hooks:textures/blocks/trapped_double.png");
+   private static final ResourceLocation RES_CHRISTMAS_DOUBLE = new ResourceLocation("Hooks:textures/blocks/christmas_double.png");
+   private static final ResourceLocation RES_NORMAL_DOUBLE = new ResourceLocation("Hooks:textures/blocks/normal_double.png");
+   private static final ResourceLocation RES_TRAPPED_SINGLE = new ResourceLocation("Hooks:textures/blocks/trapped.png");
+   private static final ResourceLocation RES_CHRISTMAS_SINGLE = new ResourceLocation("Hooks:textures/blocks/christmas.png");
+   private static final ResourceLocation RES_NORMAL_SINGLE = new ResourceLocation("Hooks:textures/blocks/normal.png");
    private bbd chestModel = new bbd();
    private bbd largeChestModel = new bbk();
    private boolean isChristmas;
@@ -28,6 +32,11 @@ public class IceChestRenderer extends bje {
          this.isChristmas = true;
       }
 
+   }
+
+   @Override
+   public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8) {
+      this.renderTileEntityChestAt((IceChestEntity)par1TileEntity, par2, par4, par6, par8);
    }
 
    public void renderTileEntityChestAt(IceChestEntity par1TileEntityChest, double par2, double par4, double par6, float par8) {
@@ -130,10 +139,6 @@ public class IceChestRenderer extends bje {
          GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
       }
 
-   }
-
-   public void a(asp par1TileEntity, double par2, double par4, double par6, float par8) {
-      this.renderTileEntityChestAt((IceChestEntity)par1TileEntity, par2, par4, par6, par8);
    }
 
 }

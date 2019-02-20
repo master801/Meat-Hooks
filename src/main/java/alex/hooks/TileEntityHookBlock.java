@@ -1,92 +1,110 @@
 package alex.hooks;
 
-import alex.hooks.TileEntityHookEntity;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
-public class TileEntityHookBlock extends amw {
+import alex.hooks.TileEntityHookEntity;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class TileEntityHookBlock extends BlockContainer {
 
    public TileEntityHookBlock(int id) {
       super(id, akc.d);
       this.a(ww.b);
       this.a(0.3F, 0.5F, 0.3F, 0.7F, 0.9F, 0.7F);
-      this.c("hook");
+      this.setUnlocalizedName("hook");
       this.c(1.0F);
    }
 
-   public void a(abw par1World, int par2, int par3, int par4, of par5EntityLivingBase, ye par6ItemStack) {
+   @Override
+   public void onBlockPlacedBy(final World par1World, final int xCoord, final int yCoord, final int zCoord, final EntityLivingBase par5EntityLivingBase, final ItemStack par6ItemStack) {
       int l = ls.c((double)(par5EntityLivingBase.A * 4.0F / 360.0F) + 2.5D) & 3;
       switch(l) {
       case 0:
-         if(aqz.l(par1World.a(par2, par3, par4 - 1))) {
-            par1World.b(par2, par3, par4, l, 2);
-         } else if(aqz.l(par1World.a(par2 + 1, par3, par4))) {
-            par1World.b(par2, par3, par4, l - 3, 2);
-         } else if(aqz.l(par1World.a(par2 - 1, par3, par4))) {
-            par1World.b(par2, par3, par4, l - 1, 2);
-         } else if(aqz.l(par1World.a(par2, par3, par4 + 1))) {
-            par1World.b(par2, par3, par4, l - 2, 2);
+         if(aqz.l(par1World.a(xCoord, yCoord, zCoord - 1))) {
+            par1World.b(xCoord, yCoord, zCoord, l, 2);
+         } else if(aqz.l(par1World.a(xCoord + 1, yCoord, zCoord))) {
+            par1World.b(xCoord, yCoord, zCoord, l - 3, 2);
+         } else if(aqz.l(par1World.a(xCoord - 1, yCoord, zCoord))) {
+            par1World.b(xCoord, yCoord, zCoord, l - 1, 2);
+         } else if(aqz.l(par1World.a(xCoord, yCoord, zCoord + 1))) {
+            par1World.b(xCoord, yCoord, zCoord, l - 2, 2);
          } else {
-            par1World.a(par2, par3, par4, true);
+            par1World.a(xCoord, yCoord, zCoord, true);
          }
          break;
       case 1:
-         if(aqz.l(par1World.a(par2 + 1, par3, par4))) {
-            par1World.b(par2, par3, par4, l, 2);
-         } else if(aqz.l(par1World.a(par2, par3, par4 + 1))) {
-            par1World.b(par2, par3, par4, l + 1, 2);
-         } else if(aqz.l(par1World.a(par2, par3, par4 - 1))) {
-            par1World.b(par2, par3, par4, l + 3, 2);
-         } else if(aqz.l(par1World.a(par2 - 1, par3, par4))) {
-            par1World.b(par2, par3, par4, l + 2, 2);
+         if(aqz.l(par1World.a(xCoord + 1, yCoord, zCoord))) {
+            par1World.b(xCoord, yCoord, zCoord, l, 2);
+         } else if(aqz.l(par1World.a(xCoord, yCoord, zCoord + 1))) {
+            par1World.b(xCoord, yCoord, zCoord, l + 1, 2);
+         } else if(aqz.l(par1World.a(xCoord, yCoord, zCoord - 1))) {
+            par1World.b(xCoord, yCoord, zCoord, l + 3, 2);
+         } else if(aqz.l(par1World.a(xCoord - 1, yCoord, zCoord))) {
+            par1World.b(xCoord, yCoord, zCoord, l + 2, 2);
          } else {
-            par1World.a(par2, par3, par4, true);
+            par1World.a(xCoord, yCoord, zCoord, true);
          }
          break;
       case 2:
-         if(aqz.l(par1World.a(par2, par3, par4 + 1))) {
-            par1World.b(par2, par3, par4, l, 2);
-         } else if(aqz.l(par1World.a(par2 - 1, par3, par4))) {
-            par1World.b(par2, par3, par4, l + 1, 2);
-         } else if(aqz.l(par1World.a(par2 + 1, par3, par4))) {
-            par1World.b(par2, par3, par4, l - 1, 2);
-         } else if(aqz.l(par1World.a(par2, par3, par4 - 1))) {
-            par1World.b(par2, par3, par4, l + 2, 2);
+         if(aqz.l(par1World.a(xCoord, yCoord, zCoord + 1))) {
+            par1World.b(xCoord, yCoord, zCoord, l, 2);
+         } else if(aqz.l(par1World.a(xCoord - 1, yCoord, zCoord))) {
+            par1World.b(xCoord, yCoord, zCoord, l + 1, 2);
+         } else if(aqz.l(par1World.a(xCoord + 1, yCoord, zCoord))) {
+            par1World.b(xCoord, yCoord, zCoord, l - 1, 2);
+         } else if(aqz.l(par1World.a(xCoord, yCoord, zCoord - 1))) {
+            par1World.b(xCoord, yCoord, zCoord, l + 2, 2);
          } else {
-            par1World.a(par2, par3, par4, true);
+            par1World.a(xCoord, yCoord, zCoord, true);
          }
          break;
       case 3:
-         if(aqz.l(par1World.a(par2 - 1, par3, par4))) {
-            par1World.b(par2, par3, par4, l, 2);
-         } else if(aqz.l(par1World.a(par2, par3, par4 - 1))) {
-            par1World.b(par2, par3, par4, l + 1, 2);
-         } else if(aqz.l(par1World.a(par2, par3, par4 + 1))) {
-            par1World.b(par2, par3, par4, l - 1, 2);
-         } else if(aqz.l(par1World.a(par2 + 1, par3, par4))) {
-            par1World.b(par2, par3, par4, l - 2, 2);
+         if(aqz.l(par1World.a(xCoord - 1, yCoord, zCoord))) {
+            par1World.b(xCoord, yCoord, zCoord, l, 2);
+         } else if(aqz.l(par1World.a(xCoord, yCoord, zCoord - 1))) {
+            par1World.b(xCoord, yCoord, zCoord, l + 1, 2);
+         } else if(aqz.l(par1World.a(xCoord, yCoord, zCoord + 1))) {
+            par1World.b(xCoord, yCoord, zCoord, l - 1, 2);
+         } else if(aqz.l(par1World.a(xCoord + 1, yCoord, zCoord))) {
+            par1World.b(xCoord, yCoord, zCoord, l - 2, 2);
          } else {
-            par1World.a(par2, par3, par4, true);
+            par1World.a(xCoord, yCoord, zCoord, true);
          }
       }
 
    }
 
-   public asp b(abw world) {
+   @Override
+   public TileEntity createNewTileEntity(final World world) {
       return new TileEntityHookEntity();
    }
 
-   public int d() {
+   @Override
+   public int getRenderType() {
       return -1;
    }
 
-   public boolean c() {
+   @Override
+   public boolean isOpaqueCube() {
       return false;
    }
 
-   public boolean b() {
+   @Override
+   public boolean renderAsNormalBlock() {
       return false;
    }
 
-   public void a(mt icon) {
-      this.cW = icon.a("Hooks:hookIcon");
+   @Override
+   @SideOnly(Side.CLIENT)
+   public void registerIcons(final IconRegister par1IconRegister) {
+      blockIcon = par1IconRegister.registerIcon("Hooks:hookIcon");
    }
+
 }

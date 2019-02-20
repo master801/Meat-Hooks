@@ -63,9 +63,8 @@ public class ClientProxy extends CommonProxy {
       ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHookedPigEntity.class, new TileEntityHookedPigRenderer());
       ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHookedChickenEntity.class, new TileEntityHookedChickenRenderer());
       ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRottenCowEntity.class, new TileEntityRottenCowRenderer());
-      ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRottenChickenEntity.class, new TileEntityRottenChickenRenderer());
+      ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRottenChickenEntity.class, new TileEntityRottenChickenRenderer());// 11111111111111111
       ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRottenPigEntity.class, new TileEntityRottenPigRenderer());
-      ClientRegistry.bindTileEntitySpecialRenderer(IceChestEntity.class, new IceChestRenderer());
       ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySkinnedCowEntity.class, new TileEntitySkinnedCowRenderer());
       ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySkinnedChickenEntity.class, new TileEntitySkinnedChickenRenderer());
       ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySkinnedPigEntity.class, new TileEntitySkinnedPigRenderer());
@@ -84,5 +83,7 @@ public class ClientProxy extends CommonProxy {
       ClientRegistry.bindTileEntitySpecialRenderer(SpitSkinnedChickenEntity.class, new SpitSkinnedChickenRenderer());
       ClientRegistry.bindTileEntitySpecialRenderer(SpitSkinnedPigEntity.class, new SpitSkinnedPigRenderer());
       ClientRegistry.bindTileEntitySpecialRenderer(HookedZombieEntity.class, new HookedZombieRenderer());
+
+      ClientRegistry.bindTileEntitySpecialRenderer(IceChestEntity.class, new IceChestRenderer());
    }
 }

@@ -1,7 +1,11 @@
 package alex.hooks;
 
 
-public class HookedCowModel extends bbo {
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+
+public class HookedCowModel extends ModelBase {
 
    bcu Shape2;
    bcu Shape3;
@@ -17,10 +21,9 @@ public class HookedCowModel extends bbo {
    bcu horn2;
    bcu udders;
 
-
    public HookedCowModel() {
-      this.t = 64;
-      this.u = 32;
+      this.textureWidth = 64;
+      this.textureWidth = 32;
       this.Shape2 = new bcu(this, 53, 8);
       this.Shape2.a(0.0F, 0.0F, 0.0F, 1, 4, 1);
       this.Shape2.a(0.0F, 15.0F, 0.0F);
@@ -101,9 +104,9 @@ public class HookedCowModel extends bbo {
       this.setRotation(this.udders, 3.141593F, 0.0F, 0.0F);
    }
 
-   public void a(nn entity, float f, float f1, float f2, float f3, float f4, float f5) {
-      super.a(entity, f, f1, f2, f3, f4, f5);
-      this.a(f, f1, f2, f3, f4, f5, entity);
+   @Override
+   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+      super.render(entity, f, f1, f2, f3, f4, f5);
       this.Shape2.a(f5);
       this.Shape3.a(f5);
       this.Shape4.a(f5);
@@ -125,7 +128,4 @@ public class HookedCowModel extends bbo {
       model.h = z;
    }
 
-   public void a(float f, float f1, float f2, float f3, float f4, float f5, nn entity) {
-      super.a(f, f1, f2, f3, f4, f5, entity);
-   }
 }

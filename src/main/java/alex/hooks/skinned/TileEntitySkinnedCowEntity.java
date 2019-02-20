@@ -1,6 +1,8 @@
 package alex.hooks.skinned;
 
 
-public class TileEntitySkinnedCowEntity extends asp {
+import net.minecraft.tileentity.TileEntity;
+
+public class TileEntitySkinnedCowEntity extends TileEntity {
 
 }

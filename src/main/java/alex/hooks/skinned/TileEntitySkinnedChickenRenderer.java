@@ -1,36 +1,43 @@
 package alex.hooks.skinned;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+
 import alex.hooks.HookedChickenModel;
 import org.lwjgl.opengl.GL11;
 
-public class TileEntitySkinnedChickenRenderer extends bje {
+public class TileEntitySkinnedChickenRenderer extends TileEntitySpecialRenderer {
 
    private final HookedChickenModel model = new HookedChickenModel();
 
+   @Override
+   public void renderTileEntityAt(TileEntity te, double x, double y, double z, float scale) {
+      GL11.glPushMatrix();
+      GL11.glTranslatef((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F);
+      ResourceLocation textures = new ResourceLocation("Hooks:textures/blocks/skinnedChicken.png");
+      super.tileEntityRenderer.renderEngine.bindTexture(textures);
+      GL11.glPushMatrix();
+      GL11.glRotatef(te.getBlockMetadata() * -90.0F, 0.0F, 1.0F, 0.0F);
+      GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
+      GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
+      this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+      GL11.glPopMatrix();
+      GL11.glPopMatrix();
+   }
 
-   private void adjustRotatePivotViaMeta(abw world, int x, int y, int z) {
+   private void adjustRotatePivotViaMeta(World world, int x, int y, int z) {
       int meta = world.h(x, y, z);
       GL11.glPushMatrix();
       GL11.glRotatef((float)(meta * -90), 0.0F, 0.0F, 1.0F);
       GL11.glPopMatrix();
    }
 
-   public void a(asp te, double x, double y, double z, float scale) {
-      GL11.glPushMatrix();
-      GL11.glTranslatef((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F);
-      bjo textures = new bjo("Hooks:textures/blocks/skinnedChicken.png");
-      atv.w().N.a(textures);
-      GL11.glPushMatrix();
-      GL11.glRotatef((float)(te.p() * -90), 0.0F, 1.0F, 0.0F);
-      GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
-      GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
-      this.model.a((nn)null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
-      GL11.glPopMatrix();
-      GL11.glPopMatrix();
-   }
-
-   private void adjustLightFixture(abw world, int i, int j, int k, aqz block) {
-      bfq tess = bfq.a;
+   private void adjustLightFixture(World world, int i, int j, int k, Block block) {
+      Tessellator tess = Tessellator.instance;
       float brightness = block.f(world, i, j, k);
       int skyLight = world.h(i, j, k, 0);
       int modulousModifier = skyLight % 65536;

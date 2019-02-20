@@ -1,30 +1,11 @@
 package alex.hooks;
 
-import alex.hooks.Cleaver;
-import alex.hooks.CommonProxy;
-import alex.hooks.DeadChicken;
-import alex.hooks.DeadCow;
-import alex.hooks.DeadPig;
-import alex.hooks.EventHandling;
-import alex.hooks.Filet;
-import alex.hooks.HooksInfo;
-import alex.hooks.IceChest;
-import alex.hooks.IceChestEntity;
-import alex.hooks.MeatItem;
-import alex.hooks.SkinnedChicken;
-import alex.hooks.SkinnedCow;
-import alex.hooks.SkinnedPig;
-import alex.hooks.TileEntityHookBlock;
-import alex.hooks.TileEntityHookEntity;
-import alex.hooks.TileEntityY2InvBlock;
-import alex.hooks.TileEntityY2InvEntity;
-import alex.hooks.TileEntityY3BInvBlock;
-import alex.hooks.TileEntityY3BInvEntity;
-import alex.hooks.TileEntityY3MInvBlock;
-import alex.hooks.TileEntityY3MInvEntity;
-import alex.hooks.UnconsciousZombie;
-import alex.hooks.X2InvBlock;
-import alex.hooks.X2InvEntity;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.MinecraftForge;
+
 import alex.hooks.burnt.BurntChickenBlock;
 import alex.hooks.burnt.BurntChickenEntity;
 import alex.hooks.burnt.BurntCowBlock;
@@ -74,17 +55,15 @@ import alex.hooks.spit.SpitPropEntity;
 import alex.hooks.spit.SpitStickBlock;
 import alex.hooks.spit.SpitStickEntity;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.MinecraftForge;
 
 @Mod(
    modid = "Hooks",
@@ -97,65 +76,66 @@ import net.minecraftforge.common.MinecraftForge;
 )
 public class Hooks {
 
-   public static aqz hook;
-   public static aqz hookedCow;
-   public static aqz hookedPig;
-   public static aqz hookedChicken;
-   public static aqz Y2Inv;
-   public static aqz Y3MInv;
-   public static aqz Y3BInv;
-   public static aqz rottenCow;
-   public static aqz rottenChicken;
-   public static aqz rottenPig;
-   public static aqz iceChest;
-   public static aqz skinnedCow;
-   public static aqz skinnedChicken;
-   public static aqz skinnedPig;
-   public static aqz spitCow;
-   public static aqz spitProp;
-   public static aqz spitStick;
-   public static aqz x2Inv;
-   public static aqz spitPig;
-   public static aqz spitChicken;
-   public static aqz cookedCow;
-   public static aqz cookedPig;
-   public static aqz cookedChicken;
-   public static aqz burntCow;
-   public static aqz burntPig;
-   public static aqz burntChicken;
-   public static aqz spitSkinnedCow;
-   public static aqz spitSkinnedChicken;
-   public static aqz spitSkinnedPig;
-   public static aqz hookedZombie;
-   public static yc deadCow;
-   public static yc deadPig;
-   public static yc deadChicken;
-   public static yc cleaver;
-   public static yc pigMeat;
-   public static yc chickenMeat;
-   public static yc cowMeat;
-   public static yc pigCooked;
-   public static yc chickennCooked;
-   public static yc cowCooked;
-   public static yc filet;
-   public static yc pigBurnt;
-   public static yc chickenBurnt;
-   public static yc cowBurnt;
-   public static yc iskinnedCow;
-   public static yc iskinnedPig;
-   public static yc iskinnedChicken;
-   public static yc unconZombie;
+   public static Block hook;
+   public static Block hookedCow;
+   public static Block hookedPig;
+   public static Block hookedChicken;
+   public static Block Y2Inv;
+   public static Block Y3MInv;
+   public static Block Y3BInv;
+   public static Block rottenCow;
+   public static Block rottenChicken;
+   public static Block rottenPig;
+   public static Block iceChest;
+   public static Block skinnedCow;
+   public static Block skinnedChicken;
+   public static Block skinnedPig;
+   public static Block spitCow;
+   public static Block spitProp;
+   public static Block spitStick;
+   public static Block x2Inv;
+   public static Block spitPig;
+   public static Block spitChicken;
+   public static Block cookedCow;
+   public static Block cookedPig;
+   public static Block cookedChicken;
+   public static Block burntCow;
+   public static Block burntPig;
+   public static Block burntChicken;
+   public static Block spitSkinnedCow;
+   public static Block spitSkinnedChicken;
+   public static Block spitSkinnedPig;
+   public static Block hookedZombie;
+   public static Item deadCow;
+   public static Item deadPig;
+   public static Item deadChicken;
+   public static Item cleaver;
+   public static Item pigMeat;
+   public static Item chickenMeat;
+   public static Item cowMeat;
+   public static Item pigCooked;
+   public static Item chickennCooked;
+   public static Item cowCooked;
+   public static Item filet;
+   public static Item pigBurnt;
+   public static Item chickenBurnt;
+   public static Item cowBurnt;
+   public static Item iskinnedCow;
+   public static Item iskinnedPig;
+   public static Item iskinnedChicken;
+   public static Item unconZombie;
    public static boolean cobleCleaver;
    public static int zombieDrops;
    public static int rotChance;
+
    @Instance("Hooks")
    public static Hooks instance;
+
    @SidedProxy(
-      clientSide = "alex.hooks.client.ClientProxy",
-      serverSide = "alex.hooks.CommonProxy"
+      clientSide = HooksInfo.CLIENTPROXY,
+      serverSide = HooksInfo.COMMONPROXY
    )
    public static CommonProxy proxy;
-
 
    @EventHandler
    public void preInit(FMLPreInitializationEvent event) {
@@ -252,15 +232,15 @@ public class Hooks {
       deadChicken = new DeadChicken(HooksInfo.DEADCHICKENITEMID);
       cleaver = new Cleaver(HooksInfo.CLEAVERITEMID);
       filet = new Filet(HooksInfo.FILETITEMID);
-      cowMeat = (new MeatItem(HooksInfo.MEATCOWITEMID, 3, 0.3F, true)).b("cowMeat").d("Hooks".toLowerCase() + ":cowMeat");
-      chickenMeat = (new MeatItem(HooksInfo.MEATCHICKENITEMID, 2, 0.3F, true)).b("chickenMeat").d("Hooks".toLowerCase() + ":chickenMeat");
-      pigMeat = (new MeatItem(HooksInfo.MEATPIGITEMID, 3, 0.3F, true)).b("pigMeat").d("Hooks".toLowerCase() + ":pigMeat");
-      pigCooked = (new MeatItem(HooksInfo.PIGCOOKEDITEMID, 8, 0.8F, true)).b("pigCooked").d("Hooks".toLowerCase() + ":pigCooked");
-      cowCooked = (new MeatItem(HooksInfo.COWCOOKEDITEMID, 8, 0.8F, true)).b("cowCooked").d("Hooks".toLowerCase() + ":cowCooked");
-      chickennCooked = (new MeatItem(HooksInfo.CHICKENCOOKEDITEMID, 6, 0.6F, true)).b("chickenCooked").d("Hooks".toLowerCase() + ":chickennCooked");
-      pigBurnt = (new MeatItem(HooksInfo.PIGBURNTITEMID, 1, 0.1F, true)).b("pigBurnt").d("Hooks".toLowerCase() + ":pigBurnt");
-      cowBurnt = (new MeatItem(HooksInfo.COWBURNTITEMID, 1, 0.1F, true)).b("cowBurnt").d("Hooks".toLowerCase() + ":cowBurnt");
-      chickenBurnt = (new MeatItem(HooksInfo.CHICKENBURNTITEMID, 1, 0.1F, true)).b("chickenBurnt").d("Hooks".toLowerCase() + ":chickenBurnt");
+      cowMeat = new MeatItem(HooksInfo.MEATCOWITEMID, 3, 0.3F, true).b("cowMeat").d("Hooks".toLowerCase() + ":cowMeat");
+      chickenMeat = new MeatItem(HooksInfo.MEATCHICKENITEMID, 2, 0.3F, true).b("chickenMeat").d("Hooks".toLowerCase() + ":chickenMeat");
+      pigMeat = new MeatItem(HooksInfo.MEATPIGITEMID, 3, 0.3F, true).b("pigMeat").d("Hooks".toLowerCase() + ":pigMeat");
+      pigCooked = new MeatItem(HooksInfo.PIGCOOKEDITEMID, 8, 0.8F, true).b("pigCooked").d("Hooks".toLowerCase() + ":pigCooked");
+      cowCooked = new MeatItem(HooksInfo.COWCOOKEDITEMID, 8, 0.8F, true).b("cowCooked").d("Hooks".toLowerCase() + ":cowCooked");
+      chickennCooked = new MeatItem(HooksInfo.CHICKENCOOKEDITEMID, 6, 0.6F, true).b("chickenCooked").d("Hooks".toLowerCase() + ":chickennCooked");
+      pigBurnt = new MeatItem(HooksInfo.PIGBURNTITEMID, 1, 0.1F, true).b("pigBurnt").d("Hooks".toLowerCase() + ":pigBurnt");
+      cowBurnt = new MeatItem(HooksInfo.COWBURNTITEMID, 1, 0.1F, true).b("cowBurnt").d("Hooks".toLowerCase() + ":cowBurnt");
+      chickenBurnt = new MeatItem(HooksInfo.CHICKENBURNTITEMID, 1, 0.1F, true).b("chickenBurnt").d("Hooks".toLowerCase() + ":chickenBurnt");
       iskinnedCow = new SkinnedCow(HooksInfo.ISKINNEDCOWITEMID);
       iskinnedPig = new SkinnedPig(HooksInfo.ISKINNEDPIGITEMID);
       iskinnedChicken = new SkinnedChicken(HooksInfo.ISKINNEDCHICKENITEMID);
@@ -370,34 +350,17 @@ public class Hooks {
       LanguageRegistry.addName(iskinnedPig, "Skinned Pig");
       GameRegistry.registerItem(unconZombie, "unconZombie");
       LanguageRegistry.addName(unconZombie, "Unconscious Zombie");
-      ye aHook = new ye(hook);
-      ye anIron = new ye(yc.q);
-      ye aCleaver = new ye(cleaver);
-      ye aStick = new ye(yc.F);
-      ye anIce = new ye(aqz.aY);
-      ye aChest = new ye(aqz.az);
-      ye anIceChest = new ye(iceChest);
-      ye apigraw = new ye(pigMeat);
-      ye acowraw = new ye(cowMeat);
-      ye achickraw = new ye(chickenMeat);
-      ye apigcooked = new ye(pigCooked);
-      ye acowcooked = new ye(cowCooked);
-      ye achickcooked = new ye(chickennCooked);
-      ye afilet = new ye(filet);
-      ye aspitprop = new ye(spitProp);
-      ye aspitstick = new ye(spitStick);
-      ye acoble = new ye(aqz.B);
-      GameRegistry.addRecipe(aHook, new Object[]{" x", " x", "xx", Character.valueOf('x'), anIron});
-      GameRegistry.addRecipe(aCleaver, new Object[]{"  x", " xx", "yx ", Character.valueOf('x'), anIron, Character.valueOf('y'), aStick});
-      GameRegistry.addRecipe(afilet, new Object[]{"  x", " x ", "y  ", Character.valueOf('x'), anIron, Character.valueOf('y'), aStick});
-      GameRegistry.addRecipe(anIceChest, new Object[]{"xyx", "yzy", "xyx", Character.valueOf('x'), anIron, Character.valueOf('y'), anIce, Character.valueOf('z'), aChest});
-      GameRegistry.addSmelting(apigraw.d, apigcooked, 0.0F);
-      GameRegistry.addSmelting(acowraw.d, acowcooked, 0.0F);
-      GameRegistry.addSmelting(achickraw.d, achickcooked, 0.0F);
-      GameRegistry.addRecipe(aspitprop, new Object[]{"x x", " x ", " x ", Character.valueOf('x'), aStick});
-      GameRegistry.addRecipe(aspitstick, new Object[]{"  x", " x ", "x  ", Character.valueOf('x'), aStick});
+      GameRegistry.addRecipe(new ItemStack(hook), " x", " x", "xx", 'x', Item.ingotIron);
+      GameRegistry.addRecipe(new ItemStack(cleaver), "  x", " xx", "yx ", 'x', Item.ingotIron, 'y', Item.stick);
+      GameRegistry.addRecipe(new ItemStack(filet), "  x", " x ", "y  ", 'x', Item.ingotIron, 'y', Item.stick);
+      GameRegistry.addRecipe(new ItemStack(iceChest), "xyx", "yzy", "xyx", 'x', Item.ingotIron, 'y', Block.ice, 'z', Block.chest);
+      GameRegistry.addSmelting(pigMeat.itemID, new ItemStack(pigCooked), 0.0F);
+      GameRegistry.addSmelting(cowMeat.itemID, new ItemStack(cowCooked), 0.0F);
+      GameRegistry.addSmelting(chickenMeat.itemID, new ItemStack(chickennCooked), 0.0F);
+      GameRegistry.addRecipe(new ItemStack(spitProp), "x x", " x ", " x ", 'x', Item.stick);
+      GameRegistry.addRecipe(new ItemStack(spitStick), "  x", " x ", "x  ", 'x', Item.stick);
       if(cobleCleaver) {
-         GameRegistry.addRecipe(aCleaver, new Object[]{"  x", " xx", "yx ", Character.valueOf('x'), acoble, Character.valueOf('y'), aStick});
+         GameRegistry.addRecipe(new ItemStack(cleaver), "  x", " xx", "yx ", 'x', Block.cobblestone, 'y', Item.stick);
       }
 
       MinecraftForge.EVENT_BUS.register(new EventHandling());

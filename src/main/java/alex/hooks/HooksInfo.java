@@ -6,8 +6,8 @@ public class HooksInfo {
    public static final String ID = "Hooks";
    public static final String NAME = "Meat Hooks";
    public static final String VERS = "0.5.2";
-   public static final String CLIENTPROXY = "alex.hooks.client.";
-   public static final String COMMONPROXY = "alex.hooks.";
+   public static final String CLIENTPROXY = "alex.hooks.client.ClientProxy";
+   public static final String COMMONPROXY = "alex.hooks.CommonProxy";
    public static int HOOKBLOCKID;
    public static int HOOKEDCOWBLOCKID;
    public static int DEADCOWITEMID;

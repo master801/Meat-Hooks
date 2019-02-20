@@ -1,6 +1,8 @@
 package alex.hooks.rotten;
 
 
-public class TileEntityRottenCowEntity extends asp {
+import net.minecraft.tileentity.TileEntity;
+
+public class TileEntityRottenCowEntity extends TileEntity {
 
 }

@@ -1,14 +1,18 @@
 package alex.hooks;
 
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+
 import alex.hooks.IceChest;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Iterator;
 import java.util.List;
 
-public class IceChestEntity extends asp implements mo {
+public class IceChestEntity extends TileEntity implements IInventory {
 
-   private ye[] chestContents = new ye[36];
+   private ItemStack[] chestContents = new ItemStack[36];
    public boolean adjacentChestChecked;
    public IceChestEntity adjacentChestZNeg;
    public IceChestEntity adjacentChestXPos;

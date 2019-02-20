@@ -1,15 +1,17 @@
 package alex.hooks.skinned;
 
 
-public class SpitSkinnedCowEntity extends asp {
+import net.minecraft.tileentity.TileEntity;
+
+public class SpitSkinnedCowEntity extends TileEntity {
 
    public float prevAngle;
    public float angle;
    public int numUsingPlayers;
 
-
-   public void h() {
-      super.h();
+   @Override
+   public void updateEntity() {
+      super.updateEntity();
       if(this.angle > 0.0F) {
          this.prevAngle = this.angle++;
          if(this.angle == 359.0F) {
@@ -18,4 +20,5 @@ public class SpitSkinnedCowEntity extends asp {
       }
 
    }
+
 }

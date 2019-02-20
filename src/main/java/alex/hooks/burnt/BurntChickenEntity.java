@@ -1,6 +1,6 @@
 package alex.hooks.burnt;
 
+import net.minecraft.tileentity.TileEntity;
 
-public class BurntChickenEntity extends asp {
-
+public class BurntChickenEntity extends TileEntity {
 }

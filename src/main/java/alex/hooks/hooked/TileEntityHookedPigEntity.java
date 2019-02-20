@@ -1,6 +1,8 @@
 package alex.hooks.hooked;
 
 
-public class TileEntityHookedPigEntity extends asp {
+import net.minecraft.tileentity.TileEntity;
+
+public class TileEntityHookedPigEntity extends TileEntity {
 
 }

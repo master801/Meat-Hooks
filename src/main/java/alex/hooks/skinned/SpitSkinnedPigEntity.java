@@ -1,7 +1,8 @@
 package alex.hooks.skinned;
 
+import net.minecraft.tileentity.TileEntity;
 
-public class SpitSkinnedPigEntity extends asp {
+public class SpitSkinnedPigEntity extends TileEntity {
 
    public float prevAngle;
    public float angle;
