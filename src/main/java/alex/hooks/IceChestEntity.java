@@ -1,14 +1,20 @@
 package alex.hooks;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryLargeChest;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 
-import alex.hooks.IceChest;
+import java.util.List;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.Iterator;
-import java.util.List;
 
 public class IceChestEntity extends TileEntity implements IInventory {
 
@@ -35,29 +41,32 @@ public class IceChestEntity extends TileEntity implements IInventory {
       this.cachedChestType = par1;
    }
 
-   public int j_() {
+   @Override
+   public int getSizeInventory() {
       return 27;
    }
 
-   public ye a(int par1) {
+   @Override
+   public ItemStack getStackInSlot(int par1) {
       return this.chestContents[par1];
    }
 
-   public ye a(int par1, int par2) {
+   @Override
+   public ItemStack decrStackSize(int par1, int par2) {
       if(this.chestContents[par1] != null) {
-         ye itemstack;
-         if(this.chestContents[par1].b <= par2) {
+         ItemStack itemstack;
+         if(this.chestContents[par1].stackSize <= par2) {
             itemstack = this.chestContents[par1];
             this.chestContents[par1] = null;
-            this.e();
+            this.onInventoryChanged();
             return itemstack;
          } else {
-            itemstack = this.chestContents[par1].a(par2);
-            if(this.chestContents[par1].b == 0) {
+            itemstack = this.chestContents[par1].splitStack(par2);
+            if(this.chestContents[par1].stackSize == 0) {
                this.chestContents[par1] = null;
             }
 
-            this.e();
+            this.onInventoryChanged();
             return itemstack;
          }
       } else {
@@ -65,9 +74,10 @@ public class IceChestEntity extends TileEntity implements IInventory {
       }
    }
 
-   public ye a_(int par1) {
+   @Override
+   public ItemStack getStackInSlotOnClosing(int par1) {
       if(this.chestContents[par1] != null) {
-         ye itemstack = this.chestContents[par1];
+         ItemStack itemstack = this.chestContents[par1];
          this.chestContents[par1] = null;
          return itemstack;
       } else {
@@ -75,80 +85,87 @@ public class IceChestEntity extends TileEntity implements IInventory {
       }
    }
 
-   public void a(int par1, ye par2ItemStack) {
+   @Override
+   public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {
       this.chestContents[par1] = par2ItemStack;
-      if(par2ItemStack != null && par2ItemStack.b > this.d()) {
-         par2ItemStack.b = this.d();
+      if(par2ItemStack != null && par2ItemStack.stackSize > this.getInventoryStackLimit()) {
+         par2ItemStack.stackSize = this.getInventoryStackLimit();
       }
 
-      this.e();
+      this.onInventoryChanged();
    }
 
-   public String b() {
-      return this.c()?this.customName:"container.chest";
+   @Override
+   public String getInvName() {
+      return isInvNameLocalized() ? customName : "container.chest";
    }
 
-   public boolean c() {
-      return this.customName != null && this.customName.length() > 0;
+   @Override
+   public boolean isInvNameLocalized() {
+      return customName != null && customName.length() > 0;
    }
 
    public void setChestGuiName(String par1Str) {
       this.customName = par1Str;
    }
 
-   public void a(by par1NBTTagCompound) {
-      super.a(par1NBTTagCompound);
-      cg nbttaglist = par1NBTTagCompound.m("Items");
-      this.chestContents = new ye[this.j_()];
-      if(par1NBTTagCompound.b("CustomName")) {
-         this.customName = par1NBTTagCompound.i("CustomName");
+   @Override
+   public void readFromNBT(NBTTagCompound par1NBTTagCompound) {
+      super.readFromNBT(par1NBTTagCompound);
+      NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
+      this.chestContents = new ItemStack[this.getSizeInventory()];
+      if(par1NBTTagCompound.hasKey("CustomName")) {
+         this.customName = par1NBTTagCompound.getString("CustomName");
       }
 
-      for(int i = 0; i < nbttaglist.c(); ++i) {
-         by nbttagcompound1 = (by)nbttaglist.b(i);
-         int j = nbttagcompound1.c("Slot") & 255;
+      for(int i = 0; i < nbttaglist.tagCount(); ++i) {
+         NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
+         int j = nbttagcompound1.getByte("Slot") & 255;
          if(j >= 0 && j < this.chestContents.length) {
-            this.chestContents[j] = ye.a(nbttagcompound1);
+            this.chestContents[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
          }
       }
 
    }
 
-   public void b(by par1NBTTagCompound) {
-      super.b(par1NBTTagCompound);
-      cg nbttaglist = new cg();
+   @Override
+   public void writeToNBT(NBTTagCompound par1NBTTagCompound) {
+      super.writeToNBT(par1NBTTagCompound);
+      NBTTagList nbttaglist = new NBTTagList();
 
       for(int i = 0; i < this.chestContents.length; ++i) {
          if(this.chestContents[i] != null) {
-            by nbttagcompound1 = new by();
-            nbttagcompound1.a("Slot", (byte)i);
-            this.chestContents[i].b(nbttagcompound1);
-            nbttaglist.a(nbttagcompound1);
+            NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+            nbttagcompound1.setByte("Slot", (byte)i);
+            this.chestContents[i].writeToNBT(nbttagcompound1);
+            nbttaglist.appendTag(nbttagcompound1);
          }
       }
 
-      par1NBTTagCompound.a("Items", nbttaglist);
-      if(this.c()) {
-         par1NBTTagCompound.a("CustomName", this.customName);
+      par1NBTTagCompound.setTag("Items", nbttaglist);
+      if(this.isInvNameLocalized()) {
+         par1NBTTagCompound.setString("CustomName", this.customName);
       }
-
    }
 
-   public int d() {
+   @Override
+   public int getInventoryStackLimit() {
       return 64;
    }
 
-   public boolean a(uf par1EntityPlayer) {
-      return this.k.r(this.l, this.m, this.n) != this?false:par1EntityPlayer.e((double)this.l + 0.5D, (double)this.m + 0.5D, (double)this.n + 0.5D) <= 64.0D;
+   @Override
+   public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
+      return worldObj.getBlockTileEntity(xCoord, yCoord, zCoord) == this && par1EntityPlayer.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64.0D;
    }
 
-   public void i() {
-      super.i();
+   @Override
+   public void updateContainingBlockInfo() {
+      super.updateContainingBlockInfo();
       this.adjacentChestChecked = false;
    }
 
    private void func_90009_a(IceChestEntity par1IceChestEntity, int par2) {
-      if(par1IceChestEntity.r()) {
+      if(par1IceChestEntity.isInvalid()) {
          this.adjacentChestChecked = false;
       } else if(this.adjacentChestChecked) {
          switch(par2) {
@@ -183,20 +200,20 @@ public class IceChestEntity extends TileEntity implements IInventory {
          this.adjacentChestXPos = null;
          this.adjacentChestXNeg = null;
          this.adjacentChestZPosition = null;
-         if(this.func_94044_a(this.l - 1, this.m, this.n)) {
-            this.adjacentChestXNeg = (IceChestEntity)this.k.r(this.l - 1, this.m, this.n);
+         if(this.func_94044_a(this.xCoord - 1, this.yCoord, this.zCoord)) {
+            this.adjacentChestXNeg = (IceChestEntity)this.worldObj.getBlockTileEntity(this.xCoord - 1, this.yCoord, this.zCoord);
          }
 
-         if(this.func_94044_a(this.l + 1, this.m, this.n)) {
-            this.adjacentChestXPos = (IceChestEntity)this.k.r(this.l + 1, this.m, this.n);
+         if(this.func_94044_a(this.xCoord + 1, this.yCoord, this.zCoord)) {
+            this.adjacentChestXPos = (IceChestEntity)this.worldObj.getBlockTileEntity(this.xCoord + 1, this.yCoord, this.zCoord);
          }
 
-         if(this.func_94044_a(this.l, this.m, this.n - 1)) {
-            this.adjacentChestZNeg = (IceChestEntity)this.k.r(this.l, this.m, this.n - 1);
+         if(this.func_94044_a(this.xCoord, this.yCoord, this.zCoord - 1)) {
+            this.adjacentChestZNeg = (IceChestEntity)this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord - 1);
          }
 
-         if(this.func_94044_a(this.l, this.m, this.n + 1)) {
-            this.adjacentChestZPosition = (IceChestEntity)this.k.r(this.l, this.m, this.n + 1);
+         if(this.func_94044_a(this.xCoord, this.yCoord, this.zCoord + 1)) {
+            this.adjacentChestZPosition = (IceChestEntity)this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord + 1);
          }
 
          if(this.adjacentChestZNeg != null) {
@@ -219,26 +236,25 @@ public class IceChestEntity extends TileEntity implements IInventory {
    }
 
    private boolean func_94044_a(int par1, int par2, int par3) {
-      aqz block = aqz.s[this.k.a(par1, par2, par3)];
-      return block != null && block instanceof IceChest?((IceChest)block).chestType == this.getChestType():false;
+      Block block = Block.blocksList[this.worldObj.getBlockId(par1, par2, par3)];
+      return block instanceof IceChest && ((IceChest)block).chestType == getChestType();
    }
 
-   public void h() {
-      super.h();
+   @Override
+   public void updateEntity() {
+      super.updateEntity();
       this.checkForAdjacentChests();
       ++this.ticksSinceSync;
       float f;
-      if(!this.k.I && this.numUsingPlayers != 0 && (this.ticksSinceSync + this.l + this.m + this.n) % 200 == 0) {
+      if(!this.worldObj.isRemote && this.numUsingPlayers != 0 && (this.ticksSinceSync + this.xCoord + this.yCoord + this.zCoord) % 200 == 0) {
          this.numUsingPlayers = 0;
          f = 5.0F;
-         List d0 = this.k.a(uf.class, asx.a().a((double)((float)this.l - f), (double)((float)this.m - f), (double)((float)this.n - f), (double)((float)(this.l + 1) + f), (double)((float)(this.m + 1) + f), (double)((float)(this.n + 1) + f)));
-         Iterator iterator = d0.iterator();
+         List<EntityPlayer> d0 = worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getAABBPool().getAABB((double)((float)this.xCoord - f), (double)((float)this.yCoord - f), (double)((float)this.zCoord - f), (double)((float)(this.xCoord + 1) + f), (double)((float)(this.yCoord + 1) + f), (double)((float)(this.zCoord + 1) + f)));
 
-         while(iterator.hasNext()) {
-            uf f1 = (uf)iterator.next();
-            if(f1.bp instanceof vj) {
-               mo f2 = ((vj)f1.bp).e();
-               if(f2 == this || f2 instanceof mn && ((mn)f2).a(this)) {
+         for(EntityPlayer entityPlayer : d0) {
+            if(entityPlayer.openContainer instanceof ContainerChest) {
+               IInventory f2 = ((ContainerChest)entityPlayer.openContainer).getLowerChestInventory();
+               if(f2 == this || f2 instanceof InventoryLargeChest && ((InventoryLargeChest)f2).isPartOfLargeChest(this)) {
                   ++this.numUsingPlayers;
                }
             }
@@ -249,8 +265,8 @@ public class IceChestEntity extends TileEntity implements IInventory {
       f = 0.1F;
       double var8;
       if(this.numUsingPlayers > 0 && this.lidAngle == 0.0F && this.adjacentChestZNeg == null && this.adjacentChestXNeg == null) {
-         double var9 = (double)this.l + 0.5D;
-         var8 = (double)this.n + 0.5D;
+         double var9 = (double)this.xCoord + 0.5D;
+         var8 = (double)this.zCoord + 0.5D;
          if(this.adjacentChestZPosition != null) {
             var8 += 0.5D;
          }
@@ -259,7 +275,7 @@ public class IceChestEntity extends TileEntity implements IInventory {
             var9 += 0.5D;
          }
 
-         this.k.a(var9, (double)this.m + 0.5D, var8, "random.chestopen", 0.5F, this.k.s.nextFloat() * 0.1F + 0.9F);
+         this.worldObj.playSoundEffect(var9, (double)this.yCoord + 0.5D, var8, "random.chestopen", 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
       }
 
       if(this.numUsingPlayers == 0 && this.lidAngle > 0.0F || this.numUsingPlayers > 0 && this.lidAngle < 1.0F) {
@@ -276,8 +292,8 @@ public class IceChestEntity extends TileEntity implements IInventory {
 
          float var11 = 0.5F;
          if(this.lidAngle < var11 && var10 >= var11 && this.adjacentChestZNeg == null && this.adjacentChestXNeg == null) {
-            var8 = (double)this.l + 0.5D;
-            double d2 = (double)this.n + 0.5D;
+            var8 = (double)this.xCoord + 0.5D;
+            double d2 = (double)this.zCoord + 0.5D;
             if(this.adjacentChestZPosition != null) {
                d2 += 0.5D;
             }
@@ -286,7 +302,7 @@ public class IceChestEntity extends TileEntity implements IInventory {
                var8 += 0.5D;
             }
 
-            this.k.a(var8, (double)this.m + 0.5D, d2, "random.chestclosed", 0.5F, this.k.s.nextFloat() * 0.1F + 0.9F);
+            this.worldObj.playSoundEffect(var8, (double)this.yCoord + 0.5D, d2, "random.chestclosed", 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
          }
 
          if(this.lidAngle < 0.0F) {
@@ -296,55 +312,60 @@ public class IceChestEntity extends TileEntity implements IInventory {
 
    }
 
-   public boolean b(int par1, int par2) {
+   @Override
+   public boolean receiveClientEvent(int par1, int par2) {
       if(par1 == 1) {
          this.numUsingPlayers = par2;
          return true;
       } else {
-         return super.b(par1, par2);
+         return super.receiveClientEvent(par1, par2);
       }
    }
 
-   public void k_() {
+   @Override
+   public void openChest() {
       if(this.numUsingPlayers < 0) {
          this.numUsingPlayers = 0;
       }
 
       ++this.numUsingPlayers;
-      this.k.d(this.l, this.m, this.n, this.q().cF, 1, this.numUsingPlayers);
-      this.k.f(this.l, this.m, this.n, this.q().cF);
-      this.k.f(this.l, this.m - 1, this.n, this.q().cF);
+      this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, this.getBlockType().blockID, 1, this.numUsingPlayers);
+      this.worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.getBlockType().blockID);
+      this.worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord - 1, this.zCoord, this.getBlockType().blockID);
    }
 
-   public void g() {
-      if(this.q() != null && this.q() instanceof IceChest) {
+   @Override
+   public void closeChest() {
+      if(this.getBlockType() != null && this.getBlockType() instanceof IceChest) {
          --this.numUsingPlayers;
-         this.k.d(this.l, this.m, this.n, this.q().cF, 1, this.numUsingPlayers);
-         this.k.f(this.l, this.m, this.n, this.q().cF);
-         this.k.f(this.l, this.m - 1, this.n, this.q().cF);
+         this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, this.getBlockType().blockID, 1, this.numUsingPlayers);
+         this.worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.getBlockType().blockID);
+         this.worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord - 1, this.zCoord, this.getBlockType().blockID);
       }
 
    }
 
-   public boolean b(int par1, ye par2ItemStack) {
+   @Override
+   public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack) {
       return true;
    }
 
-   public void w_() {
-      super.w_();
-      this.i();
+   @Override
+   public void invalidate() {
+      super.invalidate();
+      this.updateContainingBlockInfo();
       this.checkForAdjacentChests();
    }
 
    public int getChestType() {
       if(this.cachedChestType == -1) {
-         if(this.k == null || !(this.q() instanceof IceChest)) {
+         if(this.worldObj == null || !(this.getBlockType() instanceof IceChest)) {
             return 0;
          }
 
-         this.cachedChestType = ((IceChest)this.q()).chestType;
+         this.cachedChestType = ((IceChest)this.getBlockType()).chestType;
       }
-
       return this.cachedChestType;
    }
+
 }

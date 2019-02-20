@@ -5,9 +5,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Iterator;
 import java.util.Random;
+
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 
-public class IceChest extends amw {
+public class IceChest extends Block {
 
    private final Random random = new Random();
    public final int chestType;
@@ -126,7 +129,7 @@ public class IceChest extends amw {
 
    }
 
-   public void unifyAdjacentChests(abw par1World, int par2, int par3, int par4) {
+   public void unifyAdjacentChests(World par1World, int par2, int par3, int par4) {
       if(!par1World.I) {
          int l = par1World.a(par2, par3, par4 - 1);
          int i1 = par1World.a(par2, par3, par4 + 1);

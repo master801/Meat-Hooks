@@ -1,6 +1,11 @@
 package alex.hooks.rotten;
 
+import net.minecraft.client.renderer.texture.IconRegister;
+
 import alex.hooks.rotten.TileEntityRottenChickenEntity;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -56,19 +61,25 @@ public class TileEntityRottenChickenBlock extends amw {
       return new TileEntityRottenChickenEntity();
    }
 
-   public int d() {
+   @Override
+   public int getRenderType() {
       return -1;
    }
 
-   public boolean c() {
+   @Override
+   public boolean renderAsNormalBlock() {
       return false;
    }
 
-   public boolean b() {
+   @Override
+   public boolean isOpaqueCube() {
       return false;
    }
 
-   public void a(mt icon) {
-      this.cW = icon.a("Hooks:hook");
+   @Override
+   @SideOnly(Side.CLIENT)
+   public void registerIcons(final IconRegister par1IconRegister) {
+      par1IconRegister.registerIcon("Hooks:hookIcon");
    }
+
 }

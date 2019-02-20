@@ -1,5 +1,7 @@
 package alex.hooks.spit;
 
+import net.minecraft.client.renderer.texture.IconRegister;
+
 import alex.hooks.skinned.SpitSkinnedChickenEntity;
 import alex.hooks.skinned.SpitSkinnedCowEntity;
 import alex.hooks.skinned.SpitSkinnedPigEntity;
@@ -7,6 +9,8 @@ import alex.hooks.spit.SpitChickenEntity;
 import alex.hooks.spit.SpitCowEntity;
 import alex.hooks.spit.SpitPigEntity;
 import alex.hooks.spit.SpitPropEntity;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class SpitPropBlock extends amw {
 
@@ -195,16 +199,25 @@ public class SpitPropBlock extends amw {
       return new SpitPropEntity();
    }
 
-   public int d() {
+   @Override
+   public int getRenderType() {
       return -1;
    }
 
-   public boolean c() {
+   @Override
+   public boolean renderAsNormalBlock() {
       return false;
    }
 
-   public boolean b() {
+   @Override
+   public boolean isOpaqueCube() {
       return false;
+   }
+
+   @Override
+   @SideOnly(Side.CLIENT)
+   public void registerIcons(final IconRegister par1IconRegister) {
+      par1IconRegister.registerIcon("Hooks:hookIcon");
    }
 
    public void a(mt icon) {

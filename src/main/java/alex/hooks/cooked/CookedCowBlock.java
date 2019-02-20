@@ -1,87 +1,108 @@
 package alex.hooks.cooked;
 
-import alex.hooks.Hooks;
-import alex.hooks.cooked.CookedCowEntity;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+
 import java.util.ArrayList;
 import java.util.Random;
 
-public class CookedCowBlock extends amw {
+import alex.hooks.Hooks;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class CookedCowBlock extends BlockContainer {
 
    public CookedCowBlock(int id) {
-      super(id, akc.f);
-      this.a((ww)null);
-      this.c("cookedCow");
-      this.c(500.0F);
-      this.b(true);
+      super(id, Material.iron);
+      this.setCreativeTab(null);
+      this.setUnlocalizedName("cookedCow");
+      this.setHardness(500.0F);
+      this.setTickRandomly(true);
    }
 
-   public void a(acf ba, int x, int y, int z) {
-      switch(ba.h(x, y, z)) {
-      case 0:
-         this.a(0.0F, 0.0F, -1.0F, 1.0F, 1.0F, 1.0F);
-         break;
-      case 1:
-         this.a(0.0F, 0.0F, 0.0F, 2.0F, 1.0F, 1.0F);
-         break;
-      case 2:
-         this.a(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 2.0F);
-         break;
-      case 3:
-         this.a(-1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+   @Override
+   public void setBlockBoundsBasedOnState(IBlockAccess ba, int x, int y, int z) {
+      switch (ba.getBlockMetadata(x, y, z)) {
+         case 0:
+            this.setBlockBounds(0.0F, 0.0F, -1.0F, 1.0F, 1.0F, 1.0F);
+            break;
+         case 1:
+            this.setBlockBounds(0.0F, 0.0F, 0.0F, 2.0F, 1.0F, 1.0F);
+            break;
+         case 2:
+            this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 2.0F);
+            break;
+         case 3:
+            this.setBlockBounds(-1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
       }
 
    }
 
+   @Override
    public int quantityDropped(int metadata, int fortune, Random rand) {
       return 3 + rand.nextInt(3) + fortune;
    }
 
-   public ArrayList getBlockDropped(abw world, int x, int y, int z, int metadata, int fortune) {
-      ArrayList ret = new ArrayList();
-      int amount = this.quantityDropped(metadata, fortune, world.s);
+   @Override
+   public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
+      ArrayList<ItemStack> ret = new ArrayList<>();
+      int amount = this.quantityDropped(metadata, fortune, world.rand);
       boolean luckDraw = false;
       boolean idDropped = false;
       boolean metaDropped = false;
 
-      for(int i = 0; i < amount; ++i) {
-         int var13 = world.s.nextInt(3);
+      for (int i = 0; i < amount; ++i) {
+         int var13 = world.rand.nextInt(3);
          int var14 = 0;
          byte var15 = 0;
-         if(var13 == 0) {
-            var14 = Hooks.cowCooked.cv;
+         if (var13 == 0) {
+            var14 = Hooks.cowCooked.itemID;
          }
 
-         if(var13 == 1) {
-            var14 = Hooks.cowCooked.cv;
+         if (var13 == 1) {
+            var14 = Hooks.cowCooked.itemID;
          }
 
-         if(var13 == 2) {
-            var14 = yc.aZ.cv;
+         if (var13 == 2) {
+            var14 = Item.bone.itemID;
          }
 
-         ret.add(new ye(var14, 1, var15));
+         ret.add(new ItemStack(var14, 1, var15));
       }
 
       return ret;
    }
 
-   public asp b(abw world) {
+   @Override
+   public TileEntity createNewTileEntity(World world) {
       return new CookedCowEntity();
    }
 
-   public int d() {
+   @Override
+   public int getRenderType() {
       return -1;
    }
 
-   public boolean c() {
+   @Override
+   public boolean isOpaqueCube() {
       return false;
    }
 
-   public boolean b() {
+   @Override
+   public boolean renderAsNormalBlock() {
       return false;
    }
 
-   public void a(mt icon) {
-      this.cW = icon.a("Hooks:hookIcon");
+   @Override
+   @SideOnly(Side.CLIENT)
+   public void registerIcons(final IconRegister par1IconRegister) {
+      blockIcon = par1IconRegister.registerIcon("Hooks:hookIcon");
    }
+
 }

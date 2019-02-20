@@ -1,7 +1,11 @@
 package alex.hooks.spit;
 
+import net.minecraft.client.renderer.texture.IconRegister;
+
 import alex.hooks.Hooks;
 import alex.hooks.spit.SpitStickEntity;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class SpitStickBlock extends amw {
 
@@ -73,20 +77,25 @@ public class SpitStickBlock extends amw {
 
    }
 
-   public asp b(abw world) {
-      return new SpitStickEntity();
-   }
-
-   public int d() {
+   @Override
+   public int getRenderType() {
       return -1;
    }
 
-   public boolean c() {
+   @Override
+   public boolean renderAsNormalBlock() {
       return false;
    }
 
-   public boolean b() {
+   @Override
+   public boolean isOpaqueCube() {
       return false;
+   }
+
+   @Override
+   @SideOnly(Side.CLIENT)
+   public void registerIcons(final IconRegister par1IconRegister) {
+      par1IconRegister.registerIcon("Hooks:hookIcon");
    }
 
    public void a(mt icon) {

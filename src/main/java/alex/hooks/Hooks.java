@@ -59,7 +59,6 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -124,7 +123,7 @@ public class Hooks {
    public static Item iskinnedPig;
    public static Item iskinnedChicken;
    public static Item unconZombie;
-   public static boolean cobleCleaver;
+   public static boolean cobbleCleaver;
    public static int zombieDrops;
    public static int rotChance;
 
@@ -189,7 +188,7 @@ public class Hooks {
       HooksInfo.ISKINNEDPIGITEMID = config.getItem("Skinned Pig", 5127).getInt();
       HooksInfo.HOOKEDZOMBIEBLOCKID = config.getBlock("Hooked Zombie Block", 3139).getInt();
       HooksInfo.UNCONZOMBIEITEMID = config.getItem("Unconscious Zombie Item", 5128).getInt();
-      cobleCleaver = config.get("general", "Enable coblestone for cleaver recipe", false).getBoolean(false);
+      cobbleCleaver = config.get("general", "Enable coblestone for cleaver recipe", false).getBoolean(false);
       zombieDrops = config.get("general", "Zombies chance of dropping body (must be integer,1=100% 0=0%, 2=50%, 3=33% and so on)", 1).getInt();
       rotChance = config.get("general", "Meat(raw, cooked, burned) chance of rotting (must be integer,1=100% 0=0%, 2=50%, 3=33% and so on, calculated 20 times per second)", 100000).getInt();
       config.save();
@@ -359,13 +358,11 @@ public class Hooks {
       GameRegistry.addSmelting(chickenMeat.itemID, new ItemStack(chickennCooked), 0.0F);
       GameRegistry.addRecipe(new ItemStack(spitProp), "x x", " x ", " x ", 'x', Item.stick);
       GameRegistry.addRecipe(new ItemStack(spitStick), "  x", " x ", "x  ", 'x', Item.stick);
-      if(cobleCleaver) {
+      if(cobbleCleaver) {
          GameRegistry.addRecipe(new ItemStack(cleaver), "  x", " xx", "yx ", 'x', Block.cobblestone, 'y', Item.stick);
       }
 
       MinecraftForge.EVENT_BUS.register(new EventHandling());
    }
 
-   @EventHandler
-   public void postInit(FMLPostInitializationEvent event) {}
 }

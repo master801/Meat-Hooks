@@ -13,20 +13,20 @@ public class EventHandling {
     public void entityDropping(LivingDropsEvent event) {
         if (event.entityLiving instanceof EntityCow) {
             EntityCow droppingZombie = (EntityCow)event.entityLiving;
-            droppingZombie.b(Hooks.deadCow.cv, 1);
+            droppingZombie.dropItem(Hooks.deadCow.itemID, 1);
             event.setCanceled(true);
         } else if (event.entityLiving instanceof EntityPig) {
             EntityPig droppingZombie1 = (EntityPig)event.entityLiving;
-            droppingZombie1.b(Hooks.deadPig.cv, 1);
+            droppingZombie1.dropItem(Hooks.deadPig.itemID, 1);
             event.setCanceled(true);
         } else if (event.entityLiving instanceof EntityChicken) {
             EntityChicken droppingZombie2 = (EntityChicken)event.entityLiving;
-            droppingZombie2.b(Hooks.deadChicken.cv, 1);
+            droppingZombie2.dropItem(Hooks.deadChicken.itemID, 1);
             event.setCanceled(true);
         } else if (event.entityLiving instanceof EntityZombie) {
             EntityZombie droppingZombie3 = (EntityZombie)event.entityLiving;
-            if (Hooks.zombieDrops > 0 && droppingZombie3.q.s.nextInt(Hooks.zombieDrops) == 0) {
-                droppingZombie3.b(Hooks.unconZombie.cv, 1);
+            if (Hooks.zombieDrops > 0 && droppingZombie3.worldObj.rand.nextInt(Hooks.zombieDrops) == 0) {
+                droppingZombie3.dropItem(Hooks.unconZombie.itemID, 1);
             }
         }
     }

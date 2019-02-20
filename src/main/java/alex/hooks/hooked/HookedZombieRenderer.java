@@ -1,13 +1,13 @@
 package alex.hooks.hooked;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-import alex.hooks.hooked.HookedZombieEntity;
-import alex.hooks.hooked.HookedZombieModel;
 import org.lwjgl.opengl.GL11;
 
 public class HookedZombieRenderer extends TileEntitySpecialRenderer {
@@ -24,23 +24,24 @@ public class HookedZombieRenderer extends TileEntitySpecialRenderer {
       GL11.glRotatef(te.getBlockMetadata() * -90.0F, 0.0F, 1.0F, 0.0F);
       GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
       GL11.glTranslatef(0.0F, -1.9375F, 0.0F);
-      this.model.rightarm.f = a.angle;
-      this.model.leftarm.f = a.bangle;
-      this.model.rightarm.g = a.yangle;
-      this.model.leftarm.g = -a.yangle;
-      this.model.head.f = a.cangle;
-      this.model.head.g = a.eangle;
+      this.model.rightarm.rotateAngleX = a.angle;
+      this.model.leftarm.rotateAngleX = a.bangle;
+      this.model.rightarm.rotateAngleY = a.yangle;
+      this.model.leftarm.rotateAngleY = -a.yangle;
+      this.model.head.rotateAngleX = a.cangle;
+      this.model.head.rotateAngleY = a.eangle;
       this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 1.0F / 16.0F);
       GL11.glPopMatrix();
    }
 
    private void adjustLightFixture(World world, int i, int j, int k, Block block) {
-      bfq tess = bfq.a;
-      float brightness = block.f(world, i, j, k);
-      int skyLight = world.h(i, j, k, 0);
+      Tessellator tess = Tessellator.instance;
+      float brightness = block.getBlockBrightness(world, i, j, k);
+      int skyLight = world.getLightBrightnessForSkyBlocks(i, j, k, 0);
       int modulousModifier = skyLight % 65536;
       int divModifier = skyLight / 65536;
-      tess.a(brightness, brightness, brightness);
-      bma.a(bma.b, (float)modulousModifier, (float)divModifier);
+      tess.setColorOpaque_F(brightness, brightness, brightness);
+      OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)modulousModifier, (float)divModifier);
    }
+
 }

@@ -1,17 +1,18 @@
 package alex.hooks.hooked;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
+import org.lwjgl.opengl.GL11;
+
 import alex.hooks.HookedChickenModel;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
-import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class TileEntityHookedChickenRenderer extends TileEntitySpecialRenderer {
@@ -46,7 +47,8 @@ public class TileEntityHookedChickenRenderer extends TileEntitySpecialRenderer {
       int skyLight = world.getLightBrightnessForSkyBlocks(i, j, k, 0);
       int modulousModifier = skyLight % 65536;
       int divModifier = skyLight / 65536;
-      tess.a(brightness, brightness, brightness);
-      bma.a(bma.b, (float)modulousModifier, (float)divModifier);
+      tess.setColorOpaque_F(brightness, brightness, brightness);
+      OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)modulousModifier, (float)divModifier);
    }
+
 }

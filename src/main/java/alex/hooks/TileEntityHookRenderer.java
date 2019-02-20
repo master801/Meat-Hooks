@@ -1,13 +1,13 @@
 package alex.hooks;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-import alex.hooks.HookModel;
 import org.lwjgl.opengl.GL11;
 
 public class TileEntityHookRenderer extends TileEntitySpecialRenderer {
@@ -42,8 +42,8 @@ public class TileEntityHookRenderer extends TileEntitySpecialRenderer {
       int skyLight = world.getLightBrightnessForSkyBlocks(i, j, k, 0);
       int modulousModifier = skyLight % 65536;
       int divModifier = skyLight / 65536;
-      tess.a(brightness, brightness, brightness);
-      bma.a(bma.b, (float)modulousModifier, (float)divModifier);
+      tess.setColorOpaque_F(brightness, brightness, brightness);
+      OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)modulousModifier, (float)divModifier);
    }
 
 }

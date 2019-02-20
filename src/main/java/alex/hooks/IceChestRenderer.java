@@ -1,16 +1,19 @@
 package alex.hooks;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.model.ModelChest;
+import net.minecraft.client.model.ModelLargeChest;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 
-import alex.hooks.IceChest;
-import alex.hooks.IceChestEntity;
+import org.lwjgl.opengl.GL11;
+
+import java.util.Calendar;
+
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import java.util.Calendar;
-import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class IceChestRenderer extends TileEntitySpecialRenderer {
@@ -21,8 +24,8 @@ public class IceChestRenderer extends TileEntitySpecialRenderer {
    private static final ResourceLocation RES_TRAPPED_SINGLE = new ResourceLocation("Hooks:textures/blocks/trapped.png");
    private static final ResourceLocation RES_CHRISTMAS_SINGLE = new ResourceLocation("Hooks:textures/blocks/christmas.png");
    private static final ResourceLocation RES_NORMAL_SINGLE = new ResourceLocation("Hooks:textures/blocks/normal.png");
-   private bbd chestModel = new bbd();
-   private bbd largeChestModel = new bbk();
+   private ModelChest chestModel = new ModelChest();
+   private ModelChest largeChestModel = new ModelLargeChest();
    private boolean isChristmas;
 
 
@@ -41,43 +44,48 @@ public class IceChestRenderer extends TileEntitySpecialRenderer {
 
    public void renderTileEntityChestAt(IceChestEntity par1TileEntityChest, double par2, double par4, double par6, float par8) {
       int i;
-      if(!par1TileEntityChest.o()) {
+      if(!par1TileEntityChest.hasWorldObj()) {
          i = 0;
       } else {
-         aqz modelchest = par1TileEntityChest.q();
-         i = par1TileEntityChest.p();
+         Block modelchest = par1TileEntityChest.getBlockType();
+         i = par1TileEntityChest.getChestType();
          if(modelchest instanceof IceChest && i == 0) {
             try {
-               ((IceChest)modelchest).unifyAdjacentChests(par1TileEntityChest.az(), par1TileEntityChest.l, par1TileEntityChest.m, par1TileEntityChest.n);
+               ((IceChest)modelchest).unifyAdjacentChests(par1TileEntityChest.getWorldObj(), par1TileEntityChest.xCoord, par1TileEntityChest.yCoord, par1TileEntityChest.zCoord);
             } catch (ClassCastException var14) {
-               FMLLog.severe("Attempted to render a chest at %d,  %d, %d that was not a chest", new Object[]{Integer.valueOf(par1TileEntityChest.l), Integer.valueOf(par1TileEntityChest.m), Integer.valueOf(par1TileEntityChest.n)});
+               FMLLog.severe(
+                       "Attempted to render a chest at %d,  %d, %d that was not a chest",
+                       par1TileEntityChest.xCoord,
+                       par1TileEntityChest.yCoord,
+                       par1TileEntityChest.zCoord
+               );
             }
 
-            i = par1TileEntityChest.p();
+            i = par1TileEntityChest.getBlockMetadata();
          }
 
          par1TileEntityChest.checkForAdjacentChests();
       }
 
       if(par1TileEntityChest.adjacentChestZNeg == null && par1TileEntityChest.adjacentChestXNeg == null) {
-         bbd modelchest1;
+         ModelChest modelchest1;
          if(par1TileEntityChest.adjacentChestXPos == null && par1TileEntityChest.adjacentChestZPosition == null) {
             modelchest1 = this.chestModel;
             if(par1TileEntityChest.getChestType() == 1) {
-               this.a(RES_TRAPPED_SINGLE);
+               this.bindTexture(RES_TRAPPED_SINGLE);
             } else if(this.isChristmas) {
-               this.a(RES_CHRISTMAS_SINGLE);
+               this.bindTexture(RES_CHRISTMAS_SINGLE);
             } else {
-               this.a(RES_NORMAL_SINGLE);
+               this.bindTexture(RES_NORMAL_SINGLE);
             }
          } else {
             modelchest1 = this.largeChestModel;
             if(par1TileEntityChest.getChestType() == 1) {
-               this.a(RES_TRAPPED_DOUBLE);
+               this.bindTexture(RES_TRAPPED_DOUBLE);
             } else if(this.isChristmas) {
-               this.a(RES_CHRISTMAS_DOUBLE);
+               this.bindTexture(RES_CHRISTMAS_DOUBLE);
             } else {
-               this.a(RES_NORMAL_DOUBLE);
+               this.bindTexture(RES_NORMAL_DOUBLE);
             }
          }
 
@@ -132,8 +140,8 @@ public class IceChestRenderer extends TileEntitySpecialRenderer {
 
          f1 = 1.0F - f1;
          f1 = 1.0F - f1 * f1 * f1;
-         modelchest1.a.f = -(f1 * 3.1415927F / 2.0F);
-         modelchest1.a();
+         modelchest1.chestLid.rotateAngleX = -(f1 * 3.1415927F / 2.0F);
+         modelchest1.renderAll();
          GL11.glDisable('\u803a');
          GL11.glPopMatrix();
          GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
