@@ -16,70 +16,70 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class SpitPigBlock extends BlockContainer {
 
-   public SpitPigBlock(int id) {
-      super(id, Material.iron);
-      this.setCreativeTab(null);
-      this.setUnlocalizedName("spitPig");
-      this.setHardness(500.0F);
-      this.setTickRandomly(true);
-   }
+    public SpitPigBlock(int id) {
+        super(id, Material.iron);
+        this.setCreativeTab(null);
+        this.setUnlocalizedName("spitPig");
+        this.setHardness(500.0F);
+        this.setTickRandomly(true);
+    }
 
-   @Override
-   public void setBlockBoundsBasedOnState(IBlockAccess ba, int x, int y, int z) {
-      switch(ba.getBlockMetadata(x, y, z)) {
-      case 0:
-         this.setBlockBounds(0.0F, 0.0F, -1.0F, 1.0F, 1.0F, 1.0F);
-         break;
-      case 1:
-         this.setBlockBounds(0.0F, 0.0F, 0.0F, 2.0F, 1.0F, 1.0F);
-         break;
-      case 2:
-         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 2.0F);
-         break;
-      case 3:
-         this.setBlockBounds(-1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-         break;
-      }
-   }
+    @Override
+    public void setBlockBoundsBasedOnState(IBlockAccess ba, int x, int y, int z) {
+        switch(ba.getBlockMetadata(x, y, z)) {
+            case 0:
+                this.setBlockBounds(0.0F, 0.0F, -1.0F, 1.0F, 1.0F, 1.0F);
+                break;
+            case 1:
+                this.setBlockBounds(0.0F, 0.0F, 0.0F, 2.0F, 1.0F, 1.0F);
+                break;
+            case 2:
+                this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 2.0F);
+                break;
+            case 3:
+                this.setBlockBounds(-1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+                break;
+        }
+    }
 
-   @Override
-   public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
-      SpitPigEntity a = (SpitPigEntity)par1World.getBlockTileEntity(par2, par3, par4);
-      AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox((double)par2, (double)(par3 - 2), (double)par4, (double)(par2 + 1), (double)(par3 - 1), (double)(par4 + 1));
-      if(par5Random.nextInt(1) == 0 && par1World.isBoundingBoxBurning(aabb)) {
-         if(a.angle != 0.0F) {
-            par1World.setBlock(par2, par3, par4, Hooks.cookedPig.blockID, par1World.getBlockMetadata(par2, par3, par4), 2);
-         } else {
-            par1World.setBlock(par2, par3, par4, Hooks.burntPig.blockID, par1World.getBlockMetadata(par2, par3, par4), 2);
-         }
-      }
+    @Override
+    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
+        SpitPigEntity a = (SpitPigEntity)par1World.getBlockTileEntity(par2, par3, par4);
+        AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox((double)par2, (double)(par3 - 2), (double)par4, (double)(par2 + 1), (double)(par3 - 1), (double)(par4 + 1));
+        if(par5Random.nextInt(1) == 0 && par1World.isBoundingBoxBurning(aabb)) {
+            if(a.angle != 0.0F) {
+                par1World.setBlock(par2, par3, par4, Hooks.cookedPig.blockID, par1World.getBlockMetadata(par2, par3, par4), 2);
+            } else {
+                par1World.setBlock(par2, par3, par4, Hooks.burntPig.blockID, par1World.getBlockMetadata(par2, par3, par4), 2);
+            }
+        }
 
-   }
+    }
 
-   @Override
-   public TileEntity createNewTileEntity(World world) {
-      return new SpitPigEntity();
-   }
+    @Override
+    public TileEntity createNewTileEntity(World world) {
+        return new SpitPigEntity();
+    }
 
-   @Override
-   public int getRenderType() {
-      return -1;
-   }
+    @Override
+    public int getRenderType() {
+        return -1;
+    }
 
-   @Override
-   public boolean renderAsNormalBlock() {
-      return false;
-   }
+    @Override
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
 
-   @Override
-   public boolean isOpaqueCube() {
-      return false;
-   }
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
 
-   @Override
-   @SideOnly(Side.CLIENT)
-   public void registerIcons(final IconRegister par1IconRegister) {
-      par1IconRegister.registerIcon("Hooks:hookIcon");
-   }
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(final IconRegister par1IconRegister) {
+        par1IconRegister.registerIcon("Hooks:hookIcon");
+    }
 
 }

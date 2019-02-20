@@ -18,90 +18,90 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BurntCowBlock extends BlockContainer {
 
-   public BurntCowBlock(int id) {
-      super(id, Material.iron);
-      this.setCreativeTab(null);
-      this.setUnlocalizedName("burntCow");
-      this.setHardness(500.0F);
-   }
+    public BurntCowBlock(int id) {
+        super(id, Material.iron);
+        this.setCreativeTab(null);
+        this.setUnlocalizedName("burntCow");
+        this.setHardness(500.0F);
+    }
 
-   @Override
-   public void setBlockBoundsBasedOnState(IBlockAccess ba, int x, int y, int z) {
-      switch(ba.getBlockMetadata(x, y, z)) {
-      case 0:
-         this.setBlockBounds(0.0F, 0.0F, -1.0F, 1.0F, 1.0F, 1.0F);
-         break;
-      case 1:
-         this.setBlockBounds(0.0F, 0.0F, 0.0F, 2.0F, 1.0F, 1.0F);
-         break;
-      case 2:
-         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 2.0F);
-         break;
-      case 3:
-         this.setBlockBounds(-1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-         break;
-      }
-   }
+    @Override
+    public void setBlockBoundsBasedOnState(IBlockAccess ba, int x, int y, int z) {
+        switch(ba.getBlockMetadata(x, y, z)) {
+            case 0:
+                this.setBlockBounds(0.0F, 0.0F, -1.0F, 1.0F, 1.0F, 1.0F);
+                break;
+            case 1:
+                this.setBlockBounds(0.0F, 0.0F, 0.0F, 2.0F, 1.0F, 1.0F);
+                break;
+            case 2:
+                this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 2.0F);
+                break;
+            case 3:
+                this.setBlockBounds(-1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+                break;
+        }
+    }
 
-   @Override
-   public int quantityDropped(int metadata, int fortune, Random rand) {
-      return 3 + rand.nextInt(3) + fortune;
-   }
+    @Override
+    public int quantityDropped(int metadata, int fortune, Random rand) {
+        return 3 + rand.nextInt(3) + fortune;
+    }
 
-   @Override
-   public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
-      ArrayList<ItemStack> ret = new ArrayList<>();
-      int amount = this.quantityDropped(metadata, fortune, world.rand);
-      boolean luckDraw = false;
-      boolean idDropped = false;
-      boolean metaDropped = false;
+    @Override
+    public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
+        ArrayList<ItemStack> ret = new ArrayList<>();
+        int amount = this.quantityDropped(metadata, fortune, world.rand);
+        boolean luckDraw = false;
+        boolean idDropped = false;
+        boolean metaDropped = false;
 
-      for(int i = 0; i < amount; ++i) {
-         int var13 = world.rand.nextInt(3);
-         int var14 = 0;
-         byte var15 = 0;
-         if(var13 == 0) {
-            var14 = Hooks.cowBurnt.itemID;
-         }
+        for(int i = 0; i < amount; ++i) {
+            int var13 = world.rand.nextInt(3);
+            int var14 = 0;
+            byte var15 = 0;
+            if(var13 == 0) {
+                var14 = Hooks.cowBurnt.itemID;
+            }
 
-         if(var13 == 1) {
-            var14 = Hooks.cowBurnt.itemID;
-         }
+            if(var13 == 1) {
+                var14 = Hooks.cowBurnt.itemID;
+            }
 
-         if(var13 == 2) {
-            var14 = Item.bone.itemID;
-         }
+            if(var13 == 2) {
+                var14 = Item.bone.itemID;
+            }
 
-         ret.add(new ItemStack(var14, 1, var15));
-      }
+            ret.add(new ItemStack(var14, 1, var15));
+        }
 
-      return ret;
-   }
+        return ret;
+    }
 
-   @Override
-   public TileEntity createNewTileEntity(World world) {
-      return new BurntCowEntity();
-   }
+    @Override
+    public TileEntity createNewTileEntity(World world) {
+        return new BurntCowEntity();
+    }
 
-   @Override
-   public int getRenderType() {
-      return -1;
-   }
+    @Override
+    public int getRenderType() {
+        return -1;
+    }
 
-   @Override
-   public boolean renderAsNormalBlock() {
-      return false;
-   }
+    @Override
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
 
-   @Override
-   public boolean isOpaqueCube() {
-      return false;
-   }
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
 
-   @Override
-   @SideOnly(Side.CLIENT)
-   public void registerIcons(final IconRegister par1IconRegister) {
-      par1IconRegister.registerIcon("Hooks:hookIcon");
-   }
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(final IconRegister par1IconRegister) {
+        par1IconRegister.registerIcon("Hooks:hookIcon");
+    }
 
 }

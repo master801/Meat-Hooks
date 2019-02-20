@@ -1,7 +1,8 @@
 package alex.hooks;
 
-
 public class CommonProxy {
 
-   public void registerRenderers() {}
+   public void registerRenderers() {
+   }
+
 }
