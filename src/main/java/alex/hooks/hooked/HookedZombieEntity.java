@@ -1,6 +1,7 @@
 package alex.hooks.hooked;
 
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 
 public class HookedZombieEntity extends TileEntity {
@@ -16,9 +17,10 @@ public class HookedZombieEntity extends TileEntity {
    public float eangle = 0.0F;
 
 
-   public void h() {
-      super.h();
-      uf a = this.k.a((double)this.l, (double)this.m, (double)this.n, 7.0D);
+   @Override
+   public void updateEntity() {
+      super.updateEntity();
+      EntityPlayer a = this.worldObj.getClosestPlayer((double)this.xCoord, (double)this.yCoord, (double)this.zCoord, 7.0D);
       if((double)this.angle < 4.71238911151886D && (double)this.angle > 4.084070563316345D) {
          this.yangle = (float)Math.pow((double)this.angle - 4.39822971502571D, 2.0D);
          if(this.z == 1) {
@@ -33,93 +35,93 @@ public class HookedZombieEntity extends TileEntity {
       }
 
       if(a != null) {
-         if(this.p() == 0) {
-            if(a.w - (double)this.n == 0.0D) {
-               if(a.u - (double)this.l > 0.0D) {
+         if(this.getBlockMetadata() == 0) {
+            if(a.posZ - (double)this.zCoord == 0.0D) {
+               if(a.posX - (double)this.xCoord > 0.0D) {
                   this.dangle = 1.5707964F;
                } else {
                   this.dangle = -1.5707964F;
                }
             } else {
-               this.dangle = (float)Math.atan((a.u - (double)this.l) / (a.w - (double)this.n));
-               if(a.w - (double)this.n < 0.0D && a.u - (double)this.l > 0.0D) {
+               this.dangle = (float)Math.atan((a.posX - (double)this.xCoord) / (a.posZ - (double)this.zCoord));
+               if(a.posZ - (double)this.zCoord < 0.0D && a.posX - (double)this.xCoord > 0.0D) {
                   this.dangle = 1.5707964F;
                }
 
-               if(a.w - (double)this.n < 0.0D && a.u - (double)this.l < 0.0D) {
+               if(a.posZ - (double)this.zCoord < 0.0D && a.posX - (double)this.xCoord < 0.0D) {
                   this.dangle = -1.5707964F;
                }
             }
          }
 
-         if(this.p() == 1) {
-            if(a.w - (double)this.n == 0.0D) {
-               if(a.u - (double)this.l > 0.0D) {
+         if(this.getBlockMetadata() == 1) {
+            if(a.posZ - (double)this.zCoord == 0.0D) {
+               if(a.posX - (double)this.xCoord > 0.0D) {
                   this.dangle = -1.5707964F;
                } else {
                   this.dangle = 1.5707964F;
                }
             } else {
-               this.dangle = (float)Math.atan((a.u - (double)this.l) / (a.w - (double)this.n));
-               if(a.w - (double)this.n > 0.0D) {
+               this.dangle = (float)Math.atan((a.posX - (double)this.xCoord) / (a.posZ - (double)this.zCoord));
+               if(a.posZ - (double)this.zCoord > 0.0D) {
                   this.dangle = (float)((double)this.dangle + 1.5707963267948966D);
                }
 
-               if(a.w - (double)this.n < 0.0D) {
+               if(a.posZ - (double)this.zCoord < 0.0D) {
                   this.dangle = (float)((double)this.dangle - 1.5707963267948966D);
                }
 
-               if(a.w - (double)this.n < 0.0D && a.u - (double)this.l > 0.0D) {
+               if(a.posZ - (double)this.zCoord < 0.0D && a.posX - (double)this.xCoord > 0.0D) {
                   this.dangle = -1.5707964F;
                }
 
-               if(a.w - (double)this.n > 0.0D && a.u - (double)this.l > 0.0D) {
+               if(a.posZ - (double)this.zCoord > 0.0D && a.posX - (double)this.xCoord > 0.0D) {
                   this.dangle = 1.5707964F;
                }
             }
          }
 
-         if(this.p() == 2) {
-            if(a.w - (double)this.n == 0.0D) {
-               if(a.u - (double)this.l > 0.0D) {
+         if(this.getBlockMetadata() == 2) {
+            if(a.posZ - (double)this.zCoord == 0.0D) {
+               if(a.posX - (double)this.xCoord > 0.0D) {
                   this.dangle = -1.5707964F;
                } else {
                   this.dangle = 1.5707964F;
                }
             } else {
-               this.dangle = (float)Math.atan((a.u - (double)this.l) / (a.w - (double)this.n));
-               if(a.w - (double)this.n > 0.0D && a.u - (double)this.l > 0.0D) {
+               this.dangle = (float)Math.atan((a.posX - (double)this.xCoord) / (a.posZ - (double)this.zCoord));
+               if(a.posZ - (double)this.zCoord > 0.0D && a.posX - (double)this.xCoord > 0.0D) {
                   this.dangle = -1.5707964F;
                }
 
-               if(a.w - (double)this.n > 0.0D && a.u - (double)this.l < 0.0D) {
+               if(a.posZ - (double)this.zCoord > 0.0D && a.posX - (double)this.xCoord < 0.0D) {
                   this.dangle = 1.5707964F;
                }
             }
          }
 
-         if(this.p() == 3) {
-            if(a.w - (double)this.n == 0.0D) {
-               if(a.u - (double)this.l > 0.0D) {
+         if(this.getBlockMetadata() == 3) {
+            if(a.posZ - (double)this.zCoord == 0.0D) {
+               if(a.posX - (double)this.xCoord > 0.0D) {
                   this.dangle = 1.5707964F;
                } else {
                   this.dangle = -1.5707964F;
                }
             } else {
-               this.dangle = (float)Math.atan((a.u - (double)this.l) / (a.w - (double)this.n));
-               if(a.w - (double)this.n > 0.0D) {
+               this.dangle = (float)Math.atan((a.posX - (double)this.xCoord) / (a.posZ - (double)this.zCoord));
+               if(a.posZ - (double)this.zCoord > 0.0D) {
                   this.dangle = (float)((double)this.dangle - 1.5707963267948966D);
                }
 
-               if(a.w - (double)this.n < 0.0D) {
+               if(a.posZ - (double)this.zCoord < 0.0D) {
                   this.dangle = (float)((double)this.dangle + 1.5707963267948966D);
                }
 
-               if(a.w - (double)this.n < 0.0D && a.u - (double)this.l < 0.0D) {
+               if(a.posZ - (double)this.zCoord < 0.0D && a.posX - (double)this.xCoord < 0.0D) {
                   this.dangle = 1.5707964F;
                }
 
-               if(a.w - (double)this.n > 0.0D && a.u - (double)this.l < 0.0D) {
+               if(a.posZ - (double)this.zCoord > 0.0D && a.posX - (double)this.xCoord < 0.0D) {
                   this.dangle = -1.5707964F;
                }
             }
@@ -165,6 +167,6 @@ public class HookedZombieEntity extends TileEntity {
       if(this.eangle < this.dangle) {
          this.eangle = (float)((double)this.eangle + 0.06283185307179587D);
       }
-
    }
+
 }

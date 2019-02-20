@@ -1,55 +1,62 @@
 package alex.hooks.spit;
 
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
-
-import alex.hooks.Hooks;
-import alex.hooks.spit.SpitChickenEntity;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class SpitChickenBlock extends amw {
+import alex.hooks.Hooks;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class SpitChickenBlock extends BlockContainer {
 
    public SpitChickenBlock(int id) {
-      super(id, akc.f);
-      this.a((ww)null);
-      this.c("spitChicken");
-      this.c(500.0F);
-      this.b(true);
+      super(id, Material.iron);
+      this.setCreativeTab(null);
+      this.setUnlocalizedName("spitChicken");
+      this.setHardness(500.0F);
+      this.setTickRandomly(true);
    }
 
-   public void a(acf ba, int x, int y, int z) {
-      switch(ba.h(x, y, z)) {
+   @Override
+   public void setBlockBoundsBasedOnState(IBlockAccess ba, int x, int y, int z) {
+      switch(ba.getBlockMetadata(x, y, z)) {
       case 0:
-         this.a(0.0F, 0.0F, -1.0F, 1.0F, 1.0F, 1.0F);
+         this.setBlockBounds(0.0F, 0.0F, -1.0F, 1.0F, 1.0F, 1.0F);
          break;
       case 1:
-         this.a(0.0F, 0.0F, 0.0F, 2.0F, 1.0F, 1.0F);
+         this.setBlockBounds(0.0F, 0.0F, 0.0F, 2.0F, 1.0F, 1.0F);
          break;
       case 2:
-         this.a(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 2.0F);
+         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 2.0F);
          break;
       case 3:
-         this.a(-1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+         this.setBlockBounds(-1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+         break;
       }
-
    }
 
-   public void a(abw par1World, int par2, int par3, int par4, Random par5Random) {
-      SpitChickenEntity a = (SpitChickenEntity)par1World.r(par2, par3, par4);
-      asx aabb = asx.a((double)par2, (double)(par3 - 2), (double)par4, (double)(par2 + 1), (double)(par3 - 1), (double)(par4 + 1));
-      if(par5Random.nextInt(1) == 0 && par1World.e(aabb)) {
+   @Override
+   public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
+      SpitChickenEntity a = (SpitChickenEntity)par1World.getBlockTileEntity(par2, par3, par4);
+      AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox((double)par2, (double)(par3 - 2), (double)par4, (double)(par2 + 1), (double)(par3 - 1), (double)(par4 + 1));
+      if(par5Random.nextInt(1) == 0 && par1World.isBoundingBoxBurning(aabb)) {
          if(a.angle != 0.0F) {
-            par1World.f(par2, par3, par4, Hooks.cookedChicken.cF, par1World.h(par2, par3, par4), 2);
+            par1World.setBlock(par2, par3, par4, Hooks.cookedChicken.blockID, par1World.getBlockMetadata(par2, par3, par4), 2);
          } else {
-            par1World.f(par2, par3, par4, Hooks.burntChicken.cF, par1World.h(par2, par3, par4), 2);
+            par1World.setBlock(par2, par3, par4, Hooks.burntChicken.blockID, par1World.getBlockMetadata(par2, par3, par4), 2);
          }
       }
-
    }
 
-   public asp b(abw world) {
+   @Override
+   public TileEntity createNewTileEntity(World world) {
       return new SpitChickenEntity();
    }
 

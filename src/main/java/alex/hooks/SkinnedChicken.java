@@ -1,22 +1,21 @@
 package alex.hooks;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import alex.hooks.Hooks;
-
 public class SkinnedChicken extends Item {
 
    public SkinnedChicken(int id) {
       super(id);
-      this.d(4);
-      this.a(ww.f);
-      this.b("iskinnedChicken");
-      this.d("Hooks".toLowerCase() + ":iskinnedChicken");
-      this.e(1);
+      this.setMaxStackSize(4);
+      this.setCreativeTab(CreativeTabs.tabMisc);
+      this.setUnlocalizedName("iskinnedChicken");
+      this.setTextureName("Hooks".toLowerCase() + ":iskinnedChicken");
+      this.setMaxDamage(1);
    }
 
    @Override
@@ -24,34 +23,34 @@ public class SkinnedChicken extends Item {
       int blockId = world.getBlockId(x, y, z);
       int blockMeta = world.getBlockMetadata(x, y, z);
       if(blockId == Hooks.hook.blockID) {
-         if(world.c(x, y - 1, z)) {
-            world.c(x, y, z, Hooks.skinnedChicken.blockID);
-            world.b(x, y, z, blockMeta, 2);
-            world.c(x, y - 1, z, Hooks.Y2Inv.blockID);
-            world.b(x, y - 1, z, blockMeta, 2);
-            player.bn.d(itemStack.d);
-         } else if(world.I) {
-            player.a("Not enough space, try raising the hook.");
+         if(world.isAirBlock(x, y - 1, z)) {
+            world.setBlock(x, y, z, Hooks.skinnedChicken.blockID);
+            world.setBlockMetadataWithNotify(x, y, z, blockMeta, 2);
+            world.setBlock(x, y - 1, z, Hooks.Y2Inv.blockID);
+            world.setBlockMetadataWithNotify(x, y - 1, z, blockMeta, 2);
+            player.inventory.consumeInventoryItem(itemStack.itemID);
+         } else if(world.isRemote) {
+            player.addChatMessage("Not enough space, try raising the hook.");
          }
       } else if(blockId == Hooks.spitStick.blockID) {
          world.setBlock(x, y, z, Hooks.spitSkinnedChicken.blockID, blockMeta, 2);
-         player.bn.d(itemStack.d);
+         player.inventory.consumeInventoryItem(itemStack.itemID);
       } else {
          if(blockId != Hooks.x2Inv.blockID) {
             return false;
          }
 
          if(world.getBlockId(x + 1, y, z) == Hooks.spitStick.blockID) {
-            world.setBlock(x + 1, y, z, Hooks.spitSkinnedChicken.blockID, world.h(x + 1, y, z), 3);
+            world.setBlock(x + 1, y, z, Hooks.spitSkinnedChicken.blockID, world.getBlockMetadata(x + 1, y, z), 3);
          } else if(world.getBlockId(x - 1, y, z) == Hooks.spitStick.blockID) {
-            world.setBlock(x - 1, y, z, Hooks.spitSkinnedChicken.blockID, world.h(x - 1, y, z), 3);
+            world.setBlock(x - 1, y, z, Hooks.spitSkinnedChicken.blockID, world.getBlockMetadata(x - 1, y, z), 3);
          } else if(world.getBlockId(x, y, z - 1) == Hooks.spitStick.blockID) {
-            world.setBlock(x, y, z - 1, Hooks.spitSkinnedChicken.blockID, world.h(x, y, z - 1), 3);
+            world.setBlock(x, y, z - 1, Hooks.spitSkinnedChicken.blockID, world.getBlockMetadata(x, y, z - 1), 3);
          } else if(world.getBlockId(x, y, z + 1) == Hooks.spitStick.blockID) {
-            world.setBlock(x, y, z + 1, Hooks.spitSkinnedChicken.blockID, world.h(x, y, z + 1), 3);
+            world.setBlock(x, y, z + 1, Hooks.spitSkinnedChicken.blockID, world.getBlockMetadata(x, y, z + 1), 3);
          }
 
-         player.bn.d(itemStack.d);
+         player.inventory.consumeInventoryItem(itemStack.itemID);
       }
 
       return true;
@@ -63,9 +62,9 @@ public class SkinnedChicken extends Item {
    public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) {
       if(par3Entity instanceof EntityPlayer) {
          EntityPlayer ep = (EntityPlayer)par3Entity;
-         if(par2World.rand.nextInt(100000 / par1ItemStack.b) == 0) {
-            ep.bn.d(par1ItemStack.d);
-            ep.bn.a(new ye(yc.bo));
+         if(par2World.rand.nextInt(100000 / par1ItemStack.stackSize) == 0) {
+            ep.inventory.consumeInventoryItem(par1ItemStack.itemID);
+            ep.inventory.addItemStackToInventory(new ItemStack(Item.rottenFlesh));
          }
       }
    }

@@ -65,9 +65,9 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 @Mod(
-   modid = "Hooks",
-   name = "Meat Hooks",
-   version = "0.5.2"
+   modid = HooksInfo.ID,
+   name = HooksInfo.NAME,
+   version = HooksInfo.VERS
 )
 @NetworkMod(
    clientSideRequired = true,
@@ -127,7 +127,7 @@ public class Hooks {
    public static int zombieDrops;
    public static int rotChance;
 
-   @Instance("Hooks")
+   @Instance(HooksInfo.ID)
    public static Hooks instance;
 
    @SidedProxy(
@@ -231,15 +231,15 @@ public class Hooks {
       deadChicken = new DeadChicken(HooksInfo.DEADCHICKENITEMID);
       cleaver = new Cleaver(HooksInfo.CLEAVERITEMID);
       filet = new Filet(HooksInfo.FILETITEMID);
-      cowMeat = new MeatItem(HooksInfo.MEATCOWITEMID, 3, 0.3F, true).b("cowMeat").d("Hooks".toLowerCase() + ":cowMeat");
-      chickenMeat = new MeatItem(HooksInfo.MEATCHICKENITEMID, 2, 0.3F, true).b("chickenMeat").d("Hooks".toLowerCase() + ":chickenMeat");
-      pigMeat = new MeatItem(HooksInfo.MEATPIGITEMID, 3, 0.3F, true).b("pigMeat").d("Hooks".toLowerCase() + ":pigMeat");
-      pigCooked = new MeatItem(HooksInfo.PIGCOOKEDITEMID, 8, 0.8F, true).b("pigCooked").d("Hooks".toLowerCase() + ":pigCooked");
-      cowCooked = new MeatItem(HooksInfo.COWCOOKEDITEMID, 8, 0.8F, true).b("cowCooked").d("Hooks".toLowerCase() + ":cowCooked");
-      chickennCooked = new MeatItem(HooksInfo.CHICKENCOOKEDITEMID, 6, 0.6F, true).b("chickenCooked").d("Hooks".toLowerCase() + ":chickennCooked");
-      pigBurnt = new MeatItem(HooksInfo.PIGBURNTITEMID, 1, 0.1F, true).b("pigBurnt").d("Hooks".toLowerCase() + ":pigBurnt");
-      cowBurnt = new MeatItem(HooksInfo.COWBURNTITEMID, 1, 0.1F, true).b("cowBurnt").d("Hooks".toLowerCase() + ":cowBurnt");
-      chickenBurnt = new MeatItem(HooksInfo.CHICKENBURNTITEMID, 1, 0.1F, true).b("chickenBurnt").d("Hooks".toLowerCase() + ":chickenBurnt");
+      cowMeat = new MeatItem(HooksInfo.MEATCOWITEMID, 3, 0.3F, true).setUnlocalizedName("cowMeat").setTextureName("Hooks".toLowerCase() + ":cowMeat");
+      chickenMeat = new MeatItem(HooksInfo.MEATCHICKENITEMID, 2, 0.3F, true).setUnlocalizedName("chickenMeat").setTextureName("Hooks".toLowerCase() + ":chickenMeat");
+      pigMeat = new MeatItem(HooksInfo.MEATPIGITEMID, 3, 0.3F, true).setUnlocalizedName("pigMeat").setTextureName("Hooks".toLowerCase() + ":pigMeat");
+      pigCooked = new MeatItem(HooksInfo.PIGCOOKEDITEMID, 8, 0.8F, true).setUnlocalizedName("pigCooked").setTextureName("Hooks".toLowerCase() + ":pigCooked");
+      cowCooked = new MeatItem(HooksInfo.COWCOOKEDITEMID, 8, 0.8F, true).setUnlocalizedName("cowCooked").setTextureName("Hooks".toLowerCase() + ":cowCooked");
+      chickennCooked = new MeatItem(HooksInfo.CHICKENCOOKEDITEMID, 6, 0.6F, true).setUnlocalizedName("chickenCooked").setTextureName("Hooks".toLowerCase() + ":chickennCooked");
+      pigBurnt = new MeatItem(HooksInfo.PIGBURNTITEMID, 1, 0.1F, true).setUnlocalizedName("pigBurnt").setTextureName("Hooks".toLowerCase() + ":pigBurnt");
+      cowBurnt = new MeatItem(HooksInfo.COWBURNTITEMID, 1, 0.1F, true).setUnlocalizedName("cowBurnt").setTextureName("Hooks".toLowerCase() + ":cowBurnt");
+      chickenBurnt = new MeatItem(HooksInfo.CHICKENBURNTITEMID, 1, 0.1F, true).setUnlocalizedName("chickenBurnt").setTextureName("Hooks".toLowerCase() + ":chickenBurnt");
       iskinnedCow = new SkinnedCow(HooksInfo.ISKINNEDCOWITEMID);
       iskinnedPig = new SkinnedPig(HooksInfo.ISKINNEDPIGITEMID);
       iskinnedChicken = new SkinnedChicken(HooksInfo.ISKINNEDCHICKENITEMID);

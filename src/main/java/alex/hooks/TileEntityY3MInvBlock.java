@@ -1,34 +1,48 @@
 package alex.hooks;
 
-import alex.hooks.TileEntityY3MInvEntity;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
-public class TileEntityY3MInvBlock extends amw {
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class TileEntityY3MInvBlock extends BlockContainer {
 
    public TileEntityY3MInvBlock(int id) {
-      super(id, akc.f);
-      this.a((ww)null);
-      this.a(0.0F, -1.0F, 0.0F, 1.0F, 2.0F, 1.0F);
-      this.c("Y3MInv");
-      this.c(500.0F);
+      super(id, Material.iron);
+      this.setCreativeTab(null);
+      this.setBlockBounds(0.0F, -1.0F, 0.0F, 1.0F, 2.0F, 1.0F);
+      this.setUnlocalizedName("Y3MInv");
+      this.setHardness(500.0F);
    }
 
-   public asp b(abw world) {
+   @Override
+   public TileEntity createNewTileEntity(World world) {
       return new TileEntityY3MInvEntity();
    }
 
-   public int d() {
+   @Override
+   public int getRenderType() {
       return -1;
    }
 
-   public boolean c() {
+   @Override
+   public boolean renderAsNormalBlock() {
       return false;
    }
 
-   public boolean b() {
+   @Override
+   public boolean isOpaqueCube() {
       return false;
    }
 
-   public void a(mt icon) {
-      this.cW = icon.a("Hooks:hookIcon");
+   @Override
+   @SideOnly(Side.CLIENT)
+   public void registerIcons(IconRegister icon) {
+      this.blockIcon = icon.registerIcon("Hooks:hookIcon");
    }
+
 }

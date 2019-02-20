@@ -1,126 +1,144 @@
 package alex.hooks;
 
-import alex.hooks.Hooks;
-import alex.hooks.X2InvEntity;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+
 import java.util.Random;
 
-public class X2InvBlock extends amw {
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class X2InvBlock extends BlockContainer {
 
    public X2InvBlock(int id) {
-      super(id, akc.c);
-      this.a((ww)null);
-      this.c("x2Inv");
+      super(id, Material.ground);
+      this.setCreativeTab(null);
+      this.setUnlocalizedName("x2Inv");
    }
 
-   public void a(acf ba, int x, int y, int z) {
-      if(ba.a(x + 1, y, z) != Hooks.spitCow.cF && ba.a(x + 1, y, z) != Hooks.cookedCow.cF && ba.a(x + 1, y, z) != Hooks.spitSkinnedCow.cF && ba.a(x + 1, y, z) != Hooks.burntCow.cF) {
-         if(ba.a(x - 1, y, z) != Hooks.spitCow.cF && ba.a(x - 1, y, z) != Hooks.cookedCow.cF && ba.a(x - 1, y, z) != Hooks.spitSkinnedCow.cF && ba.a(x - 1, y, z) != Hooks.burntCow.cF) {
-            if(ba.a(x, y, z + 1) != Hooks.spitCow.cF && ba.a(x, y, z + 1) != Hooks.cookedCow.cF && ba.a(x, y, z + 1) != Hooks.spitSkinnedCow.cF && ba.a(x, y, z + 1) != Hooks.burntCow.cF) {
-               if(ba.a(x, y, z - 1) != Hooks.spitCow.cF && ba.a(x, y, z - 1) != Hooks.cookedCow.cF && ba.a(x, y, z - 1) != Hooks.spitSkinnedCow.cF && ba.a(x, y, z - 1) != Hooks.burntCow.cF) {
-                  if(ba.a(x + 1, y, z) == Hooks.spitStick.cF) {
-                     this.a(0.0F, 0.7F, 0.4F, 2.0F, 0.9F, 0.6F);
-                     this.c(2.0F);
-                  } else if(ba.a(x - 1, y, z) == Hooks.spitStick.cF) {
-                     this.a(-1.0F, 0.7F, 0.4F, 1.0F, 0.9F, 0.6F);
-                     this.c(2.0F);
-                  } else if(ba.a(x, y, z + 1) == Hooks.spitStick.cF) {
-                     this.a(0.4F, 0.7F, 0.0F, 0.6F, 0.9F, 2.0F);
-                     this.c(2.0F);
-                  } else if(ba.a(x, y, z - 1) == Hooks.spitStick.cF) {
-                     this.a(0.4F, 0.7F, -1.0F, 0.6F, 0.9F, 1.0F);
-                     this.c(2.0F);
-                  } else if(ba.a(x + 1, y, z) != Hooks.spitChicken.cF && ba.a(x + 1, y, z) != Hooks.cookedChicken.cF && ba.a(x + 1, y, z) != Hooks.spitSkinnedChicken.cF && ba.a(x + 1, y, z) != Hooks.burntChicken.cF) {
-                     if(ba.a(x - 1, y, z) != Hooks.spitChicken.cF && ba.a(x - 1, y, z) != Hooks.cookedChicken.cF && ba.a(x - 1, y, z) != Hooks.spitSkinnedChicken.cF && ba.a(x - 1, y, z) != Hooks.burntChicken.cF) {
-                        if(ba.a(x, y, z + 1) != Hooks.spitChicken.cF && ba.a(x, y, z + 1) != Hooks.cookedChicken.cF && ba.a(x, y, z + 1) != Hooks.spitSkinnedChicken.cF && ba.a(x, y, z + 1) != Hooks.burntChicken.cF) {
-                           if(ba.a(x, y, z - 1) != Hooks.spitChicken.cF && ba.a(x, y, z - 1) != Hooks.cookedChicken.cF && ba.a(x, y, z - 1) != Hooks.spitSkinnedChicken.cF && ba.a(x, y, z - 1) != Hooks.burntChicken.cF) {
-                              if(ba.a(x + 1, y, z) != Hooks.spitPig.cF && ba.a(x + 1, y, z) != Hooks.cookedPig.cF && ba.a(x + 1, y, z) != Hooks.spitSkinnedPig.cF && ba.a(x + 1, y, z) != Hooks.burntPig.cF) {
-                                 if(ba.a(x - 1, y, z) != Hooks.spitPig.cF && ba.a(x - 1, y, z) != Hooks.cookedPig.cF && ba.a(x - 1, y, z) != Hooks.spitSkinnedPig.cF && ba.a(x - 1, y, z) != Hooks.burntPig.cF) {
-                                    if(ba.a(x, y, z + 1) != Hooks.spitPig.cF && ba.a(x, y, z + 1) != Hooks.cookedPig.cF && ba.a(x, y, z + 1) != Hooks.spitSkinnedPig.cF && ba.a(x, y, z + 1) != Hooks.burntPig.cF) {
-                                       if(ba.a(x, y, z - 1) == Hooks.spitPig.cF || ba.a(x, y, z - 1) == Hooks.cookedPig.cF || ba.a(x, y, z - 1) == Hooks.spitSkinnedPig.cF || ba.a(x, y, z - 1) == Hooks.burntPig.cF) {
-                                          this.a(0.0F, 0.0F, -1.0F, 1.0F, 1.0F, 1.0F);
-                                          this.c(500.0F);
+   @Override
+   public void setBlockBoundsBasedOnState(IBlockAccess ba, int x, int y, int z) {
+      if(ba.getBlockId(x + 1, y, z) != Hooks.spitCow.blockID && ba.getBlockId(x + 1, y, z) != Hooks.cookedCow.blockID && ba.getBlockId(x + 1, y, z) != Hooks.spitSkinnedCow.blockID && ba.getBlockId(x + 1, y, z) != Hooks.burntCow.blockID) {
+         if(ba.getBlockId(x - 1, y, z) != Hooks.spitCow.blockID && ba.getBlockId(x - 1, y, z) != Hooks.cookedCow.blockID && ba.getBlockId(x - 1, y, z) != Hooks.spitSkinnedCow.blockID && ba.getBlockId(x - 1, y, z) != Hooks.burntCow.blockID) {
+            if(ba.getBlockId(x, y, z + 1) != Hooks.spitCow.blockID && ba.getBlockId(x, y, z + 1) != Hooks.cookedCow.blockID && ba.getBlockId(x, y, z + 1) != Hooks.spitSkinnedCow.blockID && ba.getBlockId(x, y, z + 1) != Hooks.burntCow.blockID) {
+               if(ba.getBlockId(x, y, z - 1) != Hooks.spitCow.blockID && ba.getBlockId(x, y, z - 1) != Hooks.cookedCow.blockID && ba.getBlockId(x, y, z - 1) != Hooks.spitSkinnedCow.blockID && ba.getBlockId(x, y, z - 1) != Hooks.burntCow.blockID) {
+                  if(ba.getBlockId(x + 1, y, z) == Hooks.spitStick.blockID) {
+                     this.setBlockBounds(0.0F, 0.7F, 0.4F, 2.0F, 0.9F, 0.6F);
+                     this.setHardness(2.0F);
+                  } else if(ba.getBlockId(x - 1, y, z) == Hooks.spitStick.blockID) {
+                     this.setBlockBounds(-1.0F, 0.7F, 0.4F, 1.0F, 0.9F, 0.6F);
+                     this.setHardness(2.0F);
+                  } else if(ba.getBlockId(x, y, z + 1) == Hooks.spitStick.blockID) {
+                     this.setBlockBounds(0.4F, 0.7F, 0.0F, 0.6F, 0.9F, 2.0F);
+                     this.setHardness(2.0F);
+                  } else if(ba.getBlockId(x, y, z - 1) == Hooks.spitStick.blockID) {
+                     this.setBlockBounds(0.4F, 0.7F, -1.0F, 0.6F, 0.9F, 1.0F);
+                     this.setHardness(2.0F);
+                  } else if(ba.getBlockId(x + 1, y, z) != Hooks.spitChicken.blockID && ba.getBlockId(x + 1, y, z) != Hooks.cookedChicken.blockID && ba.getBlockId(x + 1, y, z) != Hooks.spitSkinnedChicken.blockID && ba.getBlockId(x + 1, y, z) != Hooks.burntChicken.blockID) {
+                     if(ba.getBlockId(x - 1, y, z) != Hooks.spitChicken.blockID && ba.getBlockId(x - 1, y, z) != Hooks.cookedChicken.blockID && ba.getBlockId(x - 1, y, z) != Hooks.spitSkinnedChicken.blockID && ba.getBlockId(x - 1, y, z) != Hooks.burntChicken.blockID) {
+                        if(ba.getBlockId(x, y, z + 1) != Hooks.spitChicken.blockID && ba.getBlockId(x, y, z + 1) != Hooks.cookedChicken.blockID && ba.getBlockId(x, y, z + 1) != Hooks.spitSkinnedChicken.blockID && ba.getBlockId(x, y, z + 1) != Hooks.burntChicken.blockID) {
+                           if(ba.getBlockId(x, y, z - 1) != Hooks.spitChicken.blockID && ba.getBlockId(x, y, z - 1) != Hooks.cookedChicken.blockID && ba.getBlockId(x, y, z - 1) != Hooks.spitSkinnedChicken.blockID && ba.getBlockId(x, y, z - 1) != Hooks.burntChicken.blockID) {
+                              if(ba.getBlockId(x + 1, y, z) != Hooks.spitPig.blockID && ba.getBlockId(x + 1, y, z) != Hooks.cookedPig.blockID && ba.getBlockId(x + 1, y, z) != Hooks.spitSkinnedPig.blockID && ba.getBlockId(x + 1, y, z) != Hooks.burntPig.blockID) {
+                                 if(ba.getBlockId(x - 1, y, z) != Hooks.spitPig.blockID && ba.getBlockId(x - 1, y, z) != Hooks.cookedPig.blockID && ba.getBlockId(x - 1, y, z) != Hooks.spitSkinnedPig.blockID && ba.getBlockId(x - 1, y, z) != Hooks.burntPig.blockID) {
+                                    if(ba.getBlockId(x, y, z + 1) != Hooks.spitPig.blockID && ba.getBlockId(x, y, z + 1) != Hooks.cookedPig.blockID && ba.getBlockId(x, y, z + 1) != Hooks.spitSkinnedPig.blockID && ba.getBlockId(x, y, z + 1) != Hooks.burntPig.blockID) {
+                                       if(ba.getBlockId(x, y, z - 1) == Hooks.spitPig.blockID || ba.getBlockId(x, y, z - 1) == Hooks.cookedPig.blockID || ba.getBlockId(x, y, z - 1) == Hooks.spitSkinnedPig.blockID || ba.getBlockId(x, y, z - 1) == Hooks.burntPig.blockID) {
+                                          this.setBlockBounds(0.0F, 0.0F, -1.0F, 1.0F, 1.0F, 1.0F);
+                                          this.setHardness(500.0F);
                                        }
                                     } else {
-                                       this.a(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 2.0F);
-                                       this.c(500.0F);
+                                       this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 2.0F);
+                                       this.setHardness(500.0F);
                                     }
                                  } else {
-                                    this.a(-1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-                                    this.c(500.0F);
+                                    this.setBlockBounds(-1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+                                    this.setHardness(500.0F);
                                  }
                               } else {
-                                 this.a(0.0F, 0.0F, 0.0F, 2.0F, 1.0F, 1.0F);
-                                 this.c(500.0F);
+                                 this.setBlockBounds(0.0F, 0.0F, 0.0F, 2.0F, 1.0F, 1.0F);
+                                 this.setHardness(500.0F);
                               }
                            } else {
-                              this.a(0.0F, 0.0F, -1.0F, 1.0F, 1.0F, 1.0F);
-                              this.c(500.0F);
+                              this.setBlockBounds(0.0F, 0.0F, -1.0F, 1.0F, 1.0F, 1.0F);
+                              this.setHardness(500.0F);
                            }
                         } else {
-                           this.a(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 2.0F);
-                           this.c(500.0F);
+                           this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 2.0F);
+                           this.setHardness(500.0F);
                         }
                      } else {
-                        this.a(-1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-                        this.c(500.0F);
+                        this.setBlockBounds(-1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+                        this.setHardness(500.0F);
                      }
                   } else {
-                     this.a(0.0F, 0.0F, 0.0F, 2.0F, 1.0F, 1.0F);
-                     this.c(500.0F);
+                     this.setBlockBounds(0.0F, 0.0F, 0.0F, 2.0F, 1.0F, 1.0F);
+                     this.setHardness(500.0F);
                   }
                } else {
-                  this.a(0.0F, 0.0F, -1.0F, 1.0F, 1.0F, 1.0F);
-                  this.c(500.0F);
+                  this.setBlockBounds(0.0F, 0.0F, -1.0F, 1.0F, 1.0F, 1.0F);
+                  this.setHardness(500.0F);
                }
             } else {
-               this.a(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 2.0F);
-               this.c(500.0F);
+               this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 2.0F);
+               this.setHardness(500.0F);
             }
          } else {
-            this.a(-1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-            this.c(500.0F);
+            this.setBlockBounds(-1.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+            this.setHardness(500.0F);
          }
       } else {
-         this.a(0.0F, 0.0F, 0.0F, 2.0F, 1.0F, 1.0F);
-         this.c(500.0F);
+         this.setBlockBounds(0.0F, 0.0F, 0.0F, 2.0F, 1.0F, 1.0F);
+         this.setHardness(500.0F);
       }
 
    }
 
-   public void g(abw par1World, int par2, int par3, int par4, int par5) {
-      if(par1World.a(par2, par3, par4 - 1) == Hooks.spitStick.cF) {
-         par1World.a(par2, par3, par4 - 1, true);
-      } else if(par1World.a(par2 + 1, par3, par4) == Hooks.spitStick.cF) {
-         par1World.a(par2 + 1, par3, par4, true);
-      } else if(par1World.a(par2 - 1, par3, par4) == Hooks.spitStick.cF) {
-         par1World.a(par2 - 1, par3, par4, true);
-      } else if(par1World.a(par2, par3, par4 + 1) == Hooks.spitStick.cF) {
-         par1World.a(par2, par3, par4 + 1, true);
+   @Override
+   public void onBlockDestroyedByPlayer(World par1World, int par2, int par3, int par4, int par5) {
+      if(par1World.getBlockId(par2, par3, par4 - 1) == Hooks.spitStick.blockID) {
+         par1World.destroyBlock(par2, par3, par4 - 1, true);
+      } else if(par1World.getBlockId(par2 + 1, par3, par4) == Hooks.spitStick.blockID) {
+         par1World.destroyBlock(par2 + 1, par3, par4, true);
+      } else if(par1World.getBlockId(par2 - 1, par3, par4) == Hooks.spitStick.blockID) {
+         par1World.destroyBlock(par2 - 1, par3, par4, true);
+      } else if(par1World.getBlockId(par2, par3, par4 + 1) == Hooks.spitStick.blockID) {
+         par1World.destroyBlock(par2, par3, par4 + 1, true);
       }
 
    }
 
-   public int a(int par1, Random par2Random, int par3) {
+   @Override
+   public int idDropped(int par1, Random par2Random, int par3) {
       return 0;
    }
 
-   public asp b(abw world) {
+   @Override
+   public TileEntity createNewTileEntity(World world) {
       return new X2InvEntity();
    }
 
-   public int d() {
+   @Override
+   public int getRenderType() {
       return -1;
    }
 
-   public boolean c() {
+   @Override
+   public boolean renderAsNormalBlock() {
       return false;
    }
 
-   public boolean b() {
+   @Override
+   public boolean isOpaqueCube() {
       return false;
    }
 
-   public void a(mt icon) {
-      this.cW = icon.a("Hooks:hookIcon");
+   @Override
+   @SideOnly(Side.CLIENT)
+   public void registerIcons(final IconRegister par1IconRegister) {
+      par1IconRegister.registerIcon("Hooks:hookIcon");
    }
+
 }

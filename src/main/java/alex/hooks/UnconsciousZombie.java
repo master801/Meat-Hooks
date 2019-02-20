@@ -1,35 +1,40 @@
 package alex.hooks;
 
-import alex.hooks.Hooks;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
-public class UnconsciousZombie extends yc {
+public class UnconsciousZombie extends Item {
 
    public UnconsciousZombie(int id) {
       super(id);
-      this.d(1);
-      this.a(ww.f);
-      this.b("unconZombie");
-      this.d("Hooks".toLowerCase() + ":unconZombie");
-      this.e(1);
+      this.setMaxStackSize(1);
+      this.setCreativeTab(CreativeTabs.tabMisc);
+      this.setUnlocalizedName("unconZombie");
+      this.setTextureName("Hooks".toLowerCase() + ":unconZombie");
+      this.setMaxDamage(1);
    }
 
-   public boolean a(ye itemStack, uf player, abw world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-      int blockId = world.a(x, y, z);
-      int blockMeta = world.h(x, y, z);
-      if(blockId != Hooks.hook.cF) {
+   @Override
+   public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+      int blockId = world.getBlockId(x, y, z);
+      int blockMeta = world.getBlockMetadata(x, y, z);
+      if(blockId != Hooks.hook.blockID) {
          return false;
       } else {
-         if(world.c(x, y - 1, z) && world.c(x, y - 2, z)) {
-            world.c(x, y, z, Hooks.hookedZombie.cF);
-            world.b(x, y, z, blockMeta, 2);
-            world.f(x, y - 1, z, Hooks.Y3MInv.cF, blockMeta, 2);
-            world.f(x, y - 2, z, Hooks.Y3BInv.cF, blockMeta, 2);
-            player.bn.d(itemStack.d);
-         } else if(world.I) {
-            player.a("Not enough space, try raising the hook.");
+         if(world.isAirBlock(x, y - 1, z) && world.isAirBlock(x, y - 2, z)) {
+            world.setBlock(x, y, z, Hooks.hookedZombie.blockID);
+            world.setBlockMetadataWithNotify(x, y, z, blockMeta, 2);
+            world.setBlock(x, y - 1, z, Hooks.Y3MInv.blockID, blockMeta, 2);
+            world.setBlock(x, y - 2, z, Hooks.Y3BInv.blockID, blockMeta, 2);
+            player.inventory.consumeInventoryItem(itemStack.itemID);
+         } else if(world.isRemote) {
+            player.addChatMessage("Not enough space, try raising the hook.");
          }
-
          return true;
       }
    }
+
 }

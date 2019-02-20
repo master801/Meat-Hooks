@@ -8,15 +8,15 @@ public class SpitSkinnedPigEntity extends TileEntity {
    public float angle;
    public int numUsingPlayers;
 
-
-   public void h() {
-      super.h();
+   @Override
+   public void updateEntity() {
+      super.updateEntity();
       if(this.angle > 0.0F) {
          this.prevAngle = this.angle++;
          if(this.angle == 359.0F) {
             this.angle = 0.0F;
          }
       }
-
    }
+
 }

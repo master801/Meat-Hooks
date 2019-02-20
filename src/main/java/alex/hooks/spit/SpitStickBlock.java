@@ -1,80 +1,89 @@
 package alex.hooks.spit;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 import alex.hooks.Hooks;
-import alex.hooks.spit.SpitStickEntity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class SpitStickBlock extends amw {
+public class SpitStickBlock extends Block {
 
    public SpitStickBlock(int id) {
-      super(id, akc.c);
-      this.a(ww.b);
-      this.c("spitStick");
-      this.c(2.0F);
+      super(id, Material.ground);
+      this.setCreativeTab(CreativeTabs.tabBlock);
+      this.setUnlocalizedName("spitStick");
+      this.setHardness(2.0F);
    }
 
-   public void a(abw par1World, int par2, int par3, int par4, of par5EntityLivingBase, ye par6ItemStack) {
-      if(par1World.a(par2, par3, par4 + 1) == Hooks.spitProp.cF && par1World.a(par2, par3, par4 - 2) == Hooks.spitProp.cF) {
-         par1World.b(par2, par3, par4, 0, 2);
-         par1World.b(par2, par3, par4 - 2, 0, 2);
-         par1World.b(par2, par3, par4 + 1, 0, 2);
-         par1World.f(par2, par3, par4 - 1, Hooks.x2Inv.cF, 0, 2);
-      } else if(par1World.a(par2 + 1, par3, par4) == Hooks.spitProp.cF && par1World.a(par2 - 2, par3, par4) == Hooks.spitProp.cF) {
-         par1World.b(par2, par3, par4, 3, 2);
-         par1World.b(par2 - 2, par3, par4, 3, 2);
-         par1World.b(par2 + 1, par3, par4, 3, 2);
-         par1World.f(par2 - 1, par3, par4, Hooks.x2Inv.cF, 3, 2);
-      } else if(par1World.a(par2, par3, par4 - 1) == Hooks.spitProp.cF && par1World.a(par2, par3, par4 + 2) == Hooks.spitProp.cF) {
-         par1World.b(par2, par3, par4, 2, 2);
-         par1World.b(par2, par3, par4 + 2, 2, 2);
-         par1World.b(par2, par3, par4 - 1, 2, 2);
-         par1World.f(par2, par3, par4 + 1, Hooks.x2Inv.cF, 2, 2);
-      } else if(par1World.a(par2 - 1, par3, par4) == Hooks.spitProp.cF && par1World.a(par2 + 2, par3, par4) == Hooks.spitProp.cF) {
-         par1World.b(par2, par3, par4, 1, 2);
-         par1World.b(par2 + 2, par3, par4, 1, 2);
-         par1World.b(par2 - 1, par3, par4, 1, 2);
-         par1World.f(par2 + 1, par3, par4, Hooks.x2Inv.cF, 1, 2);
+   @Override
+   public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack) {
+      if(par1World.getBlockId(par2, par3, par4 + 1) == Hooks.spitProp.blockID && par1World.getBlockId(par2, par3, par4 - 2) == Hooks.spitProp.blockID) {
+         par1World.setBlockMetadataWithNotify(par2, par3, par4, 0, 2);
+         par1World.setBlockMetadataWithNotify(par2, par3, par4 - 2, 0, 2);
+         par1World.setBlockMetadataWithNotify(par2, par3, par4 + 1, 0, 2);
+         par1World.setBlock(par2, par3, par4 - 1, Hooks.x2Inv.blockID, 0, 2);
+      } else if(par1World.getBlockId(par2 + 1, par3, par4) == Hooks.spitProp.blockID && par1World.getBlockId(par2 - 2, par3, par4) == Hooks.spitProp.blockID) {
+         par1World.setBlockMetadataWithNotify(par2, par3, par4, 3, 2);
+         par1World.setBlockMetadataWithNotify(par2 - 2, par3, par4, 3, 2);
+         par1World.setBlockMetadataWithNotify(par2 + 1, par3, par4, 3, 2);
+         par1World.setBlock(par2 - 1, par3, par4, Hooks.x2Inv.blockID, 3, 2);
+      } else if(par1World.getBlockId(par2, par3, par4 - 1) == Hooks.spitProp.blockID && par1World.getBlockId(par2, par3, par4 + 2) == Hooks.spitProp.blockID) {
+         par1World.setBlockMetadataWithNotify(par2, par3, par4, 2, 2);
+         par1World.setBlockMetadataWithNotify(par2, par3, par4 + 2, 2, 2);
+         par1World.setBlockMetadataWithNotify(par2, par3, par4 - 1, 2, 2);
+         par1World.setBlock(par2, par3, par4 + 1, Hooks.x2Inv.blockID, 2, 2);
+      } else if(par1World.getBlockId(par2 - 1, par3, par4) == Hooks.spitProp.blockID && par1World.getBlockId(par2 + 2, par3, par4) == Hooks.spitProp.blockID) {
+         par1World.setBlockMetadataWithNotify(par2, par3, par4, 1, 2);
+         par1World.setBlockMetadataWithNotify(par2 + 2, par3, par4, 1, 2);
+         par1World.setBlockMetadataWithNotify(par2 - 1, par3, par4, 1, 2);
+         par1World.setBlock(par2 + 1, par3, par4, Hooks.x2Inv.blockID, 1, 2);
       } else {
-         par1World.a(par2, par3, par4, true);
+         par1World.destroyBlock(par2, par3, par4, true);
       }
 
    }
 
-   public void a(acf ba, int x, int y, int z) {
-      switch(ba.h(x, y, z)) {
+   @Override
+   public void setBlockBoundsBasedOnState(IBlockAccess ba, int x, int y, int z) {
+      switch(ba.getBlockMetadata(x, y, z)) {
       case 0:
-         this.a(0.4F, 0.7F, -1.0F, 0.6F, 0.9F, 1.0F);
+         setBlockBounds(0.4F, 0.7F, -1.0F, 0.6F, 0.9F, 1.0F);
          break;
       case 1:
-         this.a(0.0F, 0.7F, 0.4F, 2.0F, 0.9F, 0.6F);
+         setBlockBounds(0.0F, 0.7F, 0.4F, 2.0F, 0.9F, 0.6F);
          break;
       case 2:
-         this.a(0.4F, 0.7F, 0.0F, 0.6F, 0.9F, 2.0F);
+         setBlockBounds(0.4F, 0.7F, 0.0F, 0.6F, 0.9F, 2.0F);
          break;
       case 3:
-         this.a(-1.0F, 0.7F, 0.4F, 1.0F, 0.9F, 0.6F);
+         setBlockBounds(-1.0F, 0.7F, 0.4F, 1.0F, 0.9F, 0.6F);
+         break;
       }
-
    }
 
-   public void g(abw par1World, int par2, int par3, int par4, int par5) {
+   @Override
+   public void onBlockDestroyedByPlayer(World par1World, int par2, int par3, int par4, int par5) {
       switch(par5) {
       case 0:
-         par1World.a(par2, par3, par4 - 1, false);
+         par1World.destroyBlock(par2, par3, par4 - 1, false);
          break;
       case 1:
-         par1World.a(par2 + 1, par3, par4, false);
+         par1World.destroyBlock(par2 + 1, par3, par4, false);
          break;
       case 2:
-         par1World.a(par2, par3, par4 + 1, false);
+         par1World.destroyBlock(par2, par3, par4 + 1, false);
          break;
       case 3:
-         par1World.a(par2 - 1, par3, par4, false);
+         par1World.destroyBlock(par2 - 1, par3, par4, false);
+         break;
       }
-
    }
 
    @Override
@@ -95,10 +104,7 @@ public class SpitStickBlock extends amw {
    @Override
    @SideOnly(Side.CLIENT)
    public void registerIcons(final IconRegister par1IconRegister) {
-      par1IconRegister.registerIcon("Hooks:hookIcon");
+      par1IconRegister.registerIcon("Hooks:spitStickIcon");
    }
 
-   public void a(mt icon) {
-      this.cW = icon.a("Hooks:spitStickIcon");
-   }
 }

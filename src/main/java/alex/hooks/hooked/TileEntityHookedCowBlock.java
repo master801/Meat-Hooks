@@ -1,22 +1,21 @@
 package alex.hooks.hooked;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-import alex.hooks.Hooks;
-import alex.hooks.hooked.TileEntityHookedCowEntity;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 import java.util.ArrayList;
 import java.util.Random;
+
+import alex.hooks.Hooks;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileEntityHookedCowBlock extends BlockContainer {
 
@@ -37,7 +36,6 @@ public class TileEntityHookedCowBlock extends BlockContainer {
             par1World.setBlock(par2, par3, par4, Hooks.rottenCow.blockID, meta, 2);
          }
       }
-
    }
 
    @Override
@@ -58,11 +56,11 @@ public class TileEntityHookedCowBlock extends BlockContainer {
          int var14 = 0;
          byte var15 = 0;
          if(var13 == 0) {
-            var14 = yc.aH.cv;
+            var14 = Item.leather.itemID;
          }
 
          if(var13 == 1) {
-            var14 = yc.aH.cv;
+            var14 = Item.leather.itemID;
          }
 
          ret.add(new ItemStack(var14, 1, var15));
